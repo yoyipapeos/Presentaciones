@@ -1,0 +1,642 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#101522">
+  <title>Transformaciones lineales — presentación interactiva</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #101522;
+      --panel: #171f30;
+      --panel-soft: #1d2940;
+      --ink: #f3f5fa;
+      --muted: #a8b2c7;
+      --cyan: #66e4dc;
+      --pink: #ff83b5;
+      --yellow: #ffd477;
+      --line: #ffffff20;
+      --good: #8fe3a5;
+      --bad: #ff9a9a;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 24px; }
+    body {
+      margin: 0;
+      background: radial-gradient(ellipse at 75% 3%, #24374a 0, transparent 38%), var(--bg);
+      color: var(--ink);
+      font: 16px/1.65 "Segoe UI", system-ui, sans-serif;
+    }
+    button, input { font: inherit; }
+    button { touch-action: manipulation; }
+    a { color: inherit; }
+    .deck { width: min(1120px, 100% - 40px); margin: auto; }
+    .hero {
+      min-height: min(820px, 90svh);
+      display: grid;
+      align-content: center;
+      padding: 82px 0;
+      position: relative;
+    }
+    .hero-mark { position: absolute; right: 4%; top: 24%; width: min(25vw, 270px); opacity: .8; pointer-events: none; }
+    .eyebrow, .tag {
+      color: var(--cyan);
+      font-size: .78rem;
+      font-weight: 750;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+    }
+    h1 { max-width: 820px; margin: 18px 0; font-size: clamp(3rem, 8vw, 6.7rem); line-height: .99; letter-spacing: -.065em; }
+    h1 span { color: var(--cyan); }
+    h2 { margin: 0; font-size: clamp(2rem, 5vw, 3.7rem); letter-spacing: -.045em; line-height: 1.08; }
+    h3 { margin: 0 0 10px; font-size: 1.15rem; }
+    p { margin: 10px 0; color: var(--muted); }
+    .lead { max-width: 660px; font-size: clamp(1.05rem, 2vw, 1.3rem); }
+    .hero-bottom { display: flex; flex-wrap: wrap; align-items: center; gap: 16px; margin-top: 34px; }
+    .button {
+      min-height: 50px;
+      display: inline-flex; gap: 10px; align-items: center; justify-content: center;
+      padding: 11px 20px; border: 1px solid var(--cyan); border-radius: 999px;
+      color: var(--bg); background: var(--cyan); text-decoration: none; font-weight: 750;
+      cursor: pointer; transition: transform .15s ease, filter .15s ease;
+    }
+    .button:hover { filter: brightness(1.08); transform: translateY(-1px); }
+    .button.secondary { color: var(--ink); background: var(--panel); border-color: var(--line); }
+    .button.quiet { color: var(--cyan); background: transparent; }
+    .hint { color: var(--muted); font-size: .92rem; }
+    section { padding: 78px 0; border-top: 1px solid var(--line); scroll-margin-top: 20px; }
+    .section-head { display: grid; grid-template-columns: 90px 1fr; gap: 18px; margin-bottom: 30px; }
+    .number { color: var(--cyan); font-size: .9rem; font-weight: 800; padding-top: 10px; }
+    .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+    .card { border: 1px solid var(--line); border-radius: 18px; padding: 24px; background: #ffffff08; }
+    .formula { color: var(--ink); font: 600 clamp(1.1rem, 2.5vw, 1.55rem)/1.6 Georgia, serif; }
+    .accent { color: var(--cyan); }
+    .pink { color: var(--pink); }
+    .yellow { color: var(--yellow); }
+    .definition { font-size: 1.15rem; color: var(--ink); }
+    .definition strong { color: var(--cyan); }
+    .callout { margin-top: 18px; padding: 20px 24px; border: 1px solid #ffd47755; border-radius: 14px; background: #ffd4770c; }
+    .callout b { color: var(--yellow); }
+    .wizard { padding: clamp(18px, 4vw, 34px); border: 1px solid var(--line); border-radius: 24px; background: linear-gradient(145deg, #1a2639, #141b2a); box-shadow: 0 20px 70px #0003; }
+    .wizard-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 14px; flex-wrap: wrap; }
+    .exercise-switch { display: flex; flex-wrap: wrap; gap: 10px; margin: 20px 0; }
+    .choice {
+      min-height: 52px; padding: 10px 17px; border: 1px solid var(--line);
+      border-radius: 14px; color: var(--ink); background: #ffffff08;
+      cursor: pointer; font-weight: 700;
+    }
+    .choice[aria-pressed="true"] { border-color: var(--cyan); background: #66e4dc18; color: var(--cyan); }
+    .exercise-box { padding: 18px 20px; border-radius: 16px; background: #0e1420; border: 1px solid var(--line); }
+    .exercise-box .formula { font-size: clamp(1.25rem, 3.4vw, 2rem); }
+    .step-meta { margin: 25px 0 12px; display: flex; justify-content: space-between; gap: 12px; color: var(--muted); font-size: .92rem; }
+    .progress { height: 9px; background: #ffffff12; border-radius: 999px; overflow: hidden; }
+    .progress > span { display: block; width: 0; height: 100%; background: linear-gradient(90deg, var(--cyan), #a1a0ff); border-radius: inherit; transition: width .25s ease; }
+    .exercise-box #exercise-rule { white-space: pre-line; }
+    .proof-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; margin-top: 22px; align-items: start; }
+    .graph-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 18px; margin-top: 22px; align-items: start; }
+    .paper, .graph-paper { padding: clamp(16px, 3vw, 24px); border: 1px solid #b8c5d5; border-radius: 14px; color: #17243b; background: repeating-linear-gradient(to bottom, #fffefa 0, #fffefa 39px, #dce8f4 40px); box-shadow: 0 12px 35px #0003; }
+    .paper h3, .graph-paper h3 { color: #70459a; margin: 0 0 10px; }
+    .paper-lines { min-height: 120px; }
+    .paper-line { padding: 9px 0; border-bottom: 1px solid #d3deeb; color: #1767a6; font: 500 clamp(1rem, 2.2vw, 1.35rem)/1.65 "Cambria Math", Cambria, Georgia, serif; overflow-wrap: anywhere; }
+    .paper-line:last-child { border-bottom: 0; }
+    .paper-line.result-no { color: #c64035; }
+    .paper-line.result-yes { color: #18764b; }
+    .paper-controls { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 15px; }
+    .paper-controls .button { min-height: 48px; min-width: 0; padding: 9px 14px; }
+    .paper-progress { height: 7px; margin-top: 12px; border-radius: 99px; background: #17243b1a; overflow: hidden; }
+    .paper-progress span { display: block; height: 100%; width: 0; background: #70459a; transition: width .2s ease; }
+    .graph-paper svg { display: block; width: 100%; height: auto; margin: 10px 0; }
+    .graph-paper .controls { gap: 8px; }
+    .graph-paper label { color: #17243b; font-size: .9rem; }
+    .graph-paper input[type="range"] { accent-color: #70459a; }
+    .graph-paper[hidden] { display: none; }
+    .graph-caption { min-height: 3em; color: #43516a; font-size: .92rem; }
+    .graph-readout { padding: 10px 12px; border-radius: 10px; color: #17243b; background: #dce8f4; font: 1rem/1.6 "Cambria Math", Cambria, Georgia, serif; overflow-wrap: anywhere; }
+    .graph-legend { display: flex; flex-wrap: wrap; gap: 14px; color: #43516a; font-size: .9rem; }
+    .graph-legend span::before { content: ""; display: inline-block; width: 12px; height: 12px; margin-right: 6px; border-radius: 50%; background: currentColor; }
+    .verdict { display: none; margin-top: 20px; padding: 18px 22px; border-radius: 14px; font-size: clamp(1.25rem, 3vw, 1.8rem); font-weight: 800; text-align: center; }
+    .verdict.visible { display: block; }
+    .verdict.yes { color: #17663e; background: #8fe3a533; border: 1px solid #8fe3a5; }
+    .verdict.no { color: #a73232; background: #ff9a9a33; border: 1px solid #ff9a9a; }
+    .wizard-controls { display: flex; justify-content: flex-end; margin-top: 18px; }
+    .reset-controls { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 15px; }
+    .touch-note { margin: 14px 0 0; font-size: .85rem; }
+    .matrix-demo { display: grid; grid-template-columns: 1.2fr .8fr; gap: 20px; align-items: stretch; }
+    .demo-box { padding: 16px; border: 1px solid var(--line); border-radius: 18px; background: var(--panel); }
+    svg { display: block; width: 100%; height: auto; }
+    .controls { display: grid; gap: 16px; align-content: start; }
+    label { color: var(--ink); font-weight: 650; }
+    input[type="range"] { width: 100%; min-height: 34px; accent-color: var(--cyan); touch-action: pan-y; }
+    .readout { color: var(--muted); font-variant-numeric: tabular-nums; }
+    .readout strong { color: var(--cyan); }
+    .matrix { padding: 14px; border: 1px solid var(--line); border-radius: 12px; color: var(--ink); font: 1.25rem/1.6 Georgia, serif; }
+    .properties { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 18px; }
+    .property { padding: 18px; border-top: 2px solid var(--pink); background: #ffffff08; border-radius: 0 0 12px 12px; }
+    .property b { display: block; color: var(--ink); margin-bottom: 4px; }
+    .takeaway { padding: clamp(24px, 5vw, 52px); border-radius: 22px; background: linear-gradient(120deg, #66e4dc18, #ff83b512); }
+    .takeaway h2 { max-width: 800px; }
+    footer { display: flex; justify-content: space-between; gap: 18px; padding: 24px 0 40px; color: var(--muted); font-size: .9rem; }
+    .floating-nav { position: fixed; right: max(16px, env(safe-area-inset-right)); bottom: max(16px, env(safe-area-inset-bottom)); z-index: 4; display: flex; gap: 9px; }
+    .floating-nav a { width: 50px; height: 50px; display: grid; place-items: center; border: 1px solid var(--line); border-radius: 50%; text-decoration: none; background: #171f30ed; font-size: 1.2rem; }
+    :focus-visible { outline: 3px solid var(--yellow); outline-offset: 3px; }
+    @media (max-width: 700px) {
+      .deck { width: min(100% - 28px, 600px); }
+      .hero { min-height: 82svh; }
+      .hero-mark { opacity: .22; right: 0; top: 14%; width: 48vw; }
+      section { padding: 56px 0; }
+      .section-head { grid-template-columns: 54px 1fr; gap: 12px; }
+      .grid, .matrix-demo, .proof-grid { grid-template-columns: 1fr; }
+      .properties { grid-template-columns: 1fr; }
+      .paper-controls { display: grid; grid-template-columns: 1fr 1fr; }
+      .paper-controls .button { width: 100%; }
+      footer { flex-direction: column; padding-bottom: 90px; }
+      .floating-nav { display: none; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; }
+    }
+    @media print {
+      :root { color-scheme: light; --bg: white; --panel: white; --ink: #141a25; --muted: #4a5568; --line: #cbd2df; }
+      body { background: white; color: var(--ink); }
+      .hero { min-height: 75vh; }
+      .wizard, .card, .demo-box, .property { background: white; box-shadow: none; }
+      .exercise-switch, .step-controls, .floating-nav, .hero-bottom { display: none !important; }
+      .step-card { min-height: auto; }
+      .formula, .matrix { color: #141a25; }
+      section { break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <main class="deck">
+    <header class="hero" id="inicio">
+      <svg class="hero-mark" viewBox="0 0 240 240" aria-hidden="true">
+        <g fill="none" stroke="#66e4dc" stroke-width="2">
+          <path d="M25 25H215V215H25zM25 120h190M120 25v190M25 215 215 25"/>
+          <path d="M48 190 190 48" stroke="#ff83b5" stroke-width="4"/>
+          <circle cx="48" cy="190" r="7" fill="#ff83b5"/><circle cx="190" cy="48" r="7" fill="#ff83b5"/>
+        </g>
+      </svg>
+      <div class="eyebrow">Álgebra lineal · presentación interactiva</div>
+      <h1>Transformaciones<br><span>lineales</span></h1>
+      <p class="lead">Aprende a comprobar, con un procedimiento claro, si una función transforma vectores linealmente.</p>
+      <div class="hero-bottom">
+        <a class="button" href="#guia">Resolver un ejercicio <span aria-hidden="true">↓</span></a>
+      </div>
+    </header>
+
+    <section id="idea">
+      <div class="section-head"><div class="number">01 / IDEA</div><h2>¿Qué significa que una función sea lineal?</h2></div>
+      <p class="definition">Una transformación <strong>T: V → W</strong> es lineal si conserva las combinaciones de vectores: sumar y multiplicar por escalares antes o después de aplicar T produce lo mismo.</p>
+      <div class="grid">
+        <article class="card"><h3 class="accent">Aditividad</h3><div class="formula">T(u + v) = T(u) + T(v)</div><p>La imagen de una suma es la suma de las imágenes.</p></article>
+        <article class="card"><h3 class="pink">Homogeneidad</h3><div class="formula">T(cu) = cT(u)</div><p>La imagen de un múltiplo es el mismo múltiplo de la imagen.</p></article>
+      </div>
+      <div class="callout"><b>Atajo importante:</b> toda transformación lineal debe cumplir T(0) = 0. Si T(0) ≠ 0, ya sabemos que no es lineal. Si T(0) = 0, todavía hay que revisar aditividad y homogeneidad.</div>
+    </section>
+
+    <section id="guia">
+      <div class="section-head"><div class="number">02 / GUÍA</div><h2>Resolvamos un ejercicio, paso a paso</h2></div>
+      <p>Elige una función y avanza para revelar el procedimiento manual renglón por renglón. Cada toque muestra solo el siguiente cálculo o argumento; también puedes volver, reiniciar o mostrar la solución completa.</p>
+      <div class="wizard" aria-label="Ejercicio interactivo de transformaciones lineales">
+        <div class="wizard-top">
+          <div><div class="eyebrow">Elige un ejercicio</div><h3 id="exercise-name">Ejercicio A · Lineal</h3></div>
+          <span class="tag">Función de R² en R²</span>
+        </div>
+        <div class="exercise-switch" role="group" aria-label="Elegir ejercicio">
+          <button class="choice" type="button" data-exercise="a" aria-pressed="true">A · Lineal (matriz ajustable)</button>
+          <button class="choice" type="button" data-exercise="b" aria-pressed="false">B · Curvatura (no lineal)</button>
+        </div>
+        <div class="exercise-box">
+          <div class="tag">Transformación</div>
+          <div class="formula" id="exercise-rule">T: R² → R²<br>T(x, y) = (x, y)</div>
+          <p id="exercise-description">T(u + v) = T(u) + T(v) &nbsp; · &nbsp; T(cu) = cT(u)</p>
+        </div>
+        <div class="proof-grid">
+          <article class="paper" aria-label="Hoja de superposición">
+            <h3>Parte 1 · Superposición</h3>
+            <div class="paper-lines" id="superposition-lines" aria-live="polite"></div>
+            <div class="paper-progress" role="progressbar" aria-label="Avance de superposición"><span id="superposition-progress"></span></div>
+            <div class="paper-controls">
+              <button class="button secondary" type="button" id="superposition-back">Anterior</button>
+              <button class="button" type="button" id="superposition-next">Avanzar</button>
+              <button class="button quiet" type="button" id="superposition-all">Mostrar todo</button>
+            </div>
+          </article>
+          <article class="paper" aria-label="Hoja de homogeneidad">
+            <h3>Parte 2 · Homogeneidad</h3>
+            <div class="paper-lines" id="homogeneity-lines" aria-live="polite"></div>
+            <div class="paper-progress" role="progressbar" aria-label="Avance de homogeneidad"><span id="homogeneity-progress"></span></div>
+            <div class="paper-controls">
+              <button class="button secondary" type="button" id="homogeneity-back">Anterior</button>
+              <button class="button" type="button" id="homogeneity-next">Avanzar</button>
+              <button class="button quiet" type="button" id="homogeneity-all">Mostrar todo</button>
+            </div>
+          </article>
+        </div>
+        <div class="graph-grid">
+          <article class="graph-paper" id="graph-a">
+            <h3>Gráfica A · transformación lineal</h3>
+            <svg viewBox="0 0 420 340" role="img" aria-labelledby="graph-a-title">
+              <title id="graph-a-title">La identidad deja la cuadrícula sin cambios</title>
+              <defs><marker id="arrow-a-in" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="#66758c"/></marker><marker id="arrow-a-out" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="#d04a78"/></marker></defs>
+              <g id="original-a" fill="none" stroke="#66758c" stroke-opacity=".45" stroke-width="1"></g>
+              <g id="mapped-a" fill="none" stroke="#1885cb" stroke-width="2"></g>
+              <path d="M30 170H390M210 310V30" stroke="#9ba8b8" stroke-width="1"/>
+              <path id="vector-a-input" fill="none" stroke="#66758c" stroke-width="2" stroke-dasharray="6 5" marker-end="url(#arrow-a-in)"/>
+              <path id="vector-a-output" fill="none" stroke="#d04a78" stroke-width="4" marker-end="url(#arrow-a-out)"/>
+              <circle id="point-a" r="5" fill="#d04a78"/>
+            </svg>
+            <p class="graph-caption">Vector fijo v = (1, 1). Ajusta la matriz y observa cómo cambia T(v).</p>
+            <div class="graph-readout" id="a-matrix-readout"></div>
+            <div class="graph-controls controls">
+              <div><label for="a-m11">a₁₁: <span id="a-m11-value">1.0</span></label><input id="a-m11" type="range" min="-1" max="1" value="1" step="0.1"></div>
+              <div><label for="a-m12">a₁₂: <span id="a-m12-value">0.0</span></label><input id="a-m12" type="range" min="-1" max="1" value="0" step="0.1"></div>
+              <div><label for="a-m21">a₂₁: <span id="a-m21-value">0.0</span></label><input id="a-m21" type="range" min="-1" max="1" value="0" step="0.1"></div>
+              <div><label for="a-m22">a₂₂: <span id="a-m22-value">1.0</span></label><input id="a-m22" type="range" min="-1" max="1" value="1" step="0.1"></div>
+            </div>
+            <div class="graph-legend"><span style="color:#66758c">v</span><span style="color:#d04a78">T(v)</span></div>
+          </article>
+          <article class="graph-paper" id="graph-b" hidden>
+            <h3>Gráfica B · falla la superposición</h3>
+            <svg viewBox="0 0 420 340" role="img" aria-labelledby="graph-b-title">
+              <title id="graph-b-title">T de u más v y T de u más T de v terminan en puntos distintos</title>
+              <defs><marker id="arrow-b-combined" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="#d04a78"/></marker><marker id="arrow-b-separate" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="#1885cb"/></marker></defs>
+              <g id="original-b" fill="none" stroke="#66758c" stroke-opacity=".45" stroke-width="1"></g>
+              <g id="mapped-b" fill="none" stroke="#d04a78" stroke-width="2"></g>
+              <path d="M30 170H390M210 310V30" stroke="#9ba8b8" stroke-width="1"/>
+              <path id="vector-b-combined" fill="none" stroke="#d04a78" stroke-width="4" marker-end="url(#arrow-b-combined)"/>
+              <path id="vector-b-separate" fill="none" stroke="#1885cb" stroke-width="4" stroke-dasharray="7 4" marker-end="url(#arrow-b-separate)"/>
+              <circle id="point-b-combined" r="5" fill="#d04a78"/>
+              <circle id="point-b-separate" r="5" fill="#1885cb"/>
+            </svg>
+            <p class="graph-caption">Ajusta u y v. Las flechas muestran resultados distintos al aplicar T antes o después de sumar.</p>
+            <div class="graph-readout" id="b-sum-readout"></div>
+            <div class="graph-controls controls">
+              <div><label for="b-y1">u = (0, y₁): <span id="b-y1-value">1.0</span></label><input id="b-y1" type="range" min="-1.5" max="1.5" value="1" step="0.1"></div>
+              <div><label for="b-y2">v = (0, y₂): <span id="b-y2-value">1.0</span></label><input id="b-y2" type="range" min="-1.5" max="1.5" value="1" step="0.1"></div>
+              <div><label for="b-beta">Curvatura β: <span id="b-beta-value">0.25</span></label><input id="b-beta" type="range" min="0.1" max="0.5" value="0.25" step="0.05"></div>
+            </div>
+            <div class="graph-legend"><span style="color:#d04a78">T(u + v)</span><span style="color:#1885cb">T(u) + T(v)</span></div>
+          </article>
+        </div>
+        <div class="verdict" id="verdict" aria-live="polite"></div>
+        <div class="reset-controls">
+          <button class="button secondary" type="button" id="reset-button">↺ Reiniciar las dos hojas</button>
+        </div>
+        <p class="touch-note">Cada hoja avanza de forma independiente. La conclusión aparece al completar superposición y homogeneidad.</p>
+      </div>
+    </section>
+
+    <section id="matrices">
+      <div class="section-head"><div class="number">03 / MATRICES</div><h2>Cuando sí es lineal, una matriz la representa</h2></div>
+      <p>Para transformaciones lineales entre espacios de coordenadas, existe una matriz A tal que T(x) = Ax. Una constante sumada al resultado no puede formar parte de esa multiplicación lineal.</p>
+      <div class="grid">
+        <article class="card"><h3>Ejercicio A · lineal</h3><div class="formula">T_A(x, y) = (x, y)</div><p>Su matriz es <span class="formula">[ 1&nbsp; 0 ; 0&nbsp; 1 ]</span>.</p></article>
+        <article class="card"><h3>Ejercicio B · no lineal</h3><div class="formula">T_B(x, y) = (x + βy², y)</div><p>El término cuadrático produce líneas curvas y falla las propiedades de linealidad.</p></article>
+      </div>
+    </section>
+
+    <section id="demo">
+      <div class="section-head"><div class="number">04 / EXPLORA</div><h2>Una cizalla lineal también puede cambiar la forma</h2></div>
+      <p>Esta transformación con matriz <span class="formula">A = [ a&nbsp; k ; 0&nbsp; 1 ]</span> deforma la cuadrícula, pero sigue siendo lineal porque conserva el origen, las sumas y los múltiplos escalares.</p>
+      <div class="matrix-demo">
+        <div class="demo-box">
+          <svg id="plot" viewBox="0 0 420 340" role="img" aria-labelledby="plot-title plot-desc">
+            <title id="plot-title">Cuadrícula antes y después de la transformación</title>
+            <desc id="plot-desc">La cuadrícula gris es la original y la rosa es la imagen transformada.</desc>
+            <defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="#66e4dc"/></marker></defs>
+            <g id="original" fill="none" stroke="#9aa7bf" stroke-opacity=".38" stroke-width="1"></g>
+            <g id="mapped" fill="none" stroke="#ff83b5" stroke-opacity=".72" stroke-width="1.5"></g>
+            <path d="M35 170H395M210 310V30" stroke="#ffffff55" stroke-width="1"/>
+            <path id="vector" d="" fill="none" stroke="#66e4dc" stroke-width="4" marker-end="url(#arrow)"/>
+            <circle id="point" r="5" fill="#66e4dc"/>
+            <text x="365" y="160" fill="#a8b2c7" font-size="12">x</text>
+            <text x="218" y="42" fill="#a8b2c7" font-size="12">y</text>
+          </svg>
+          <p class="hint">Gris: antes · rosa: después · turquesa: vector transformado</p>
+        </div>
+        <div class="demo-box controls">
+          <div><label for="sx">Estiramiento horizontal, a: <span id="sx-value" class="accent">1.4</span></label><input id="sx" type="range" min="0.5" max="2.5" value="1.4" step="0.1"></div>
+          <div><label for="shear">Cizalla, k: <span id="shear-value" class="accent">0.4</span></label><input id="shear" type="range" min="-1" max="1" value="0.4" step="0.1"></div>
+          <div><label for="vx">Componente horizontal: <span id="vx-value" class="accent">1.0</span></label><input id="vx" type="range" min="-2" max="2" value="1" step="0.1"></div>
+          <div><label for="vy">Componente vertical: <span id="vy-value" class="accent">1.2</span></label><input id="vy" type="range" min="-2" max="2" value="1.2" step="0.1"></div>
+          <div class="matrix" id="matrix" aria-live="polite"></div>
+          <div class="readout" id="result" aria-live="polite"></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="repaso">
+      <div class="section-head"><div class="number">05 / REPASO</div><h2>Una lista corta para tus ejercicios</h2></div>
+      <div class="properties">
+        <div class="property"><b>1. Identifica dominio y regla</b><p>Escribe qué vectores entran y qué expresión define T.</p></div>
+        <div class="property"><b>2. Prueba el vector cero</b><p>Si T(0) ≠ 0, concluye inmediatamente que no es lineal.</p></div>
+        <div class="property"><b>3. Verifica las dos propiedades</b><p>Si T(0) = 0, demuestra aditividad y homogeneidad para vectores generales.</p></div>
+      </div>
+    </section>
+
+    <section id="cierre">
+      <div class="takeaway">
+        <div class="eyebrow">Idea final</div>
+        <h2>Comprueba las propiedades, no te guíes solo por la apariencia.</h2>
+        <p>Una regla es lineal exactamente cuando conserva sumas y múltiplos escalares. Para descartarla, un solo caso que falle es suficiente.</p>
+        <div class="formula">T(u + v) = T(u) + T(v) &nbsp; y &nbsp; T(cu) = cT(u)</div>
+      </div>
+    </section>
+    <footer><span>Transformaciones lineales · Álgebra lineal</span><span>Presentación interactiva · Español</span></footer>
+  </main>
+  <nav class="floating-nav" aria-label="Navegación rápida">
+    <a href="#inicio" aria-label="Ir al inicio" title="Inicio">↑</a>
+    <a href="#guia" aria-label="Ir al ejercicio" title="Ejercicio">✎</a>
+  </nav>
+  <script>
+    const svgNS = "http://www.w3.org/2000/svg";
+    const center = { x: 210, y: 170 };
+    const graphScale = 43;
+    function point(x, y) { return `${center.x + x * graphScale},${center.y - y * graphScale}`; }
+
+    const exercises = {
+      a: {
+        name: "Ejercicio A · Lineal",
+        rule: "T_A(x, y) = (ax + by, cx + dy)",
+        linear: true,
+        superposition: [
+          "u₁ = (x₁, y₁),  u₂ = (x₂, y₂) ∈ R²",
+          "T_A(u₁ + u₂)",
+          "= T_A(x₁ + x₂, y₁ + y₂)",
+          "= (a(x₁ + x₂) + b(y₁ + y₂), c(x₁ + x₂) + d(y₁ + y₂))",
+          "= (ax₁ + by₁, cx₁ + dy₁) + (ax₂ + by₂, cx₂ + dy₂)",
+          "= T_A(u₁) + T_A(u₂)",
+          "T_A(u₁ + u₂) = T_A(u₁) + T_A(u₂)  ✓"
+        ],
+        homogeneity: [
+          "t ∈ R,  u = (x, y) ∈ R²",
+          "T_A(tu) = T_A(tx, ty)",
+          "= (a(tx) + b(ty), c(tx) + d(ty))",
+          "= t(ax + by, cx + dy)",
+          "= tT_A(u)",
+          "T_A(cu) = cT_A(u)  ✓"
+        ]
+      },
+      b: {
+        name: "Ejercicio B · No lineal",
+        rule: "T_B: R² → R²\nT_B(x, y) = (x + βy², y),  β > 0",
+        linear: false,
+        superposition: [
+          "u₁ = (x₁, y₁),  u₂ = (x₂, y₂) ∈ R²",
+          "T_B(u₁ + u₂)",
+          "= T_B(x₁ + x₂, y₁ + y₂)",
+          "= (x₁ + x₂ + β(y₁ + y₂)², y₁ + y₂)",
+          "= (x₁ + x₂ + βy₁² + 2βy₁y₂ + βy₂², y₁ + y₂)",
+          "T_B(u₁ + u₂) − T_B(u₁) − T_B(u₂)",
+          "= (β[(y₁ + y₂)² − y₁² − y₂²], 0)",
+          "= (2βy₁y₂, 0)",
+          "y₁ = y₂ = 1  ⇒  (2β, 0) ≠ (0, 0)",
+          "T_B(u₁ + u₂) ≠ T_B(u₁) + T_B(u₂)  ✗"
+        ],
+        homogeneity: [
+          "c ∈ R,  u = (x, y) ∈ R²",
+          "T_B(cu) = T_B(cx, cy)",
+          "= (cx + βc²y², cy)",
+          "cT_B(u) = c(x + βy², y)",
+          "= (cx + βcy², cy)",
+          "T_B(cu) − cT_B(u) = (β(c² − c)y², 0)",
+          "c = 2, y = 1  ⇒  (2β, 0) ≠ (0, 0)",
+          "T_B(cu) ≠ cT_B(u)  ✗"
+        ]
+      }
+    };
+
+    let activeExercise = "a";
+    const papers = {
+      superposition: { lines: document.querySelector("#superposition-lines"), progress: document.querySelector("#superposition-progress"), shown: 0, review: -1 },
+      homogeneity: { lines: document.querySelector("#homogeneity-lines"), progress: document.querySelector("#homogeneity-progress"), shown: 0, review: -1 }
+    };
+
+    function appendPaperLine(kind) {
+      const state = papers[kind];
+      const formula = exercises[activeExercise][kind][state.shown];
+      if (formula === undefined) return;
+      const row = document.createElement("div");
+      row.className = "paper-line";
+      if (formula.includes("✗")) row.classList.add("result-no");
+      if (formula.includes("✓")) row.classList.add("result-yes");
+      row.textContent = formula;
+      state.lines.append(row);
+      state.shown++;
+      state.review = state.shown - 1;
+    }
+
+    function renderPaper(kind) {
+      const state = papers[kind];
+      const total = exercises[activeExercise][kind].length;
+      state.progress.style.width = `${state.shown / total * 100}%`;
+      const prefix = kind === "superposition" ? "superposition" : "homogeneity";
+      document.querySelector(`#${prefix}-back`).disabled = state.review <= 0;
+      document.querySelector(`#${prefix}-next`).disabled = state.shown === total;
+      document.querySelector(`#${prefix}-next`).textContent = state.shown === total ? "Completo ✓" : "Avanzar ↓";
+      document.querySelector(`#${prefix}-all`).disabled = state.shown === total;
+    }
+
+    function renderVerdict() {
+      const done = Object.keys(papers).every(kind => papers[kind].shown === exercises[activeExercise][kind].length);
+      const verdict = document.querySelector("#verdict");
+      verdict.className = "verdict";
+      if (!done) {
+        verdict.textContent = "";
+        return;
+      }
+      const isLinear = exercises[activeExercise].linear;
+      verdict.classList.add("visible", isLinear ? "yes" : "no");
+      verdict.textContent = isLinear
+        ? "T_A ∈ Hom(R², R²)  ·  TRANSFORMACIÓN LINEAL"
+        : "T_B ∉ Hom(R², R²)  ·  NO ES TRANSFORMACIÓN LINEAL";
+    }
+
+    function renderExercise() {
+      const exercise = exercises[activeExercise];
+      document.querySelector("#exercise-name").textContent = exercise.name;
+      document.querySelector("#exercise-rule").textContent = exercise.rule;
+      document.querySelector("#graph-a").hidden = activeExercise !== "a";
+      document.querySelector("#graph-b").hidden = activeExercise !== "b";
+      document.querySelectorAll(".choice").forEach(button => {
+        button.setAttribute("aria-pressed", String(button.dataset.exercise === activeExercise));
+      });
+      if (activeExercise === "a") updateGraphA();
+      else updateGraphB();
+      renderPaper("superposition");
+      renderPaper("homogeneity");
+      renderVerdict();
+    }
+
+    function advancePaper(kind) {
+      const state = papers[kind];
+      const total = exercises[activeExercise][kind].length;
+      if (state.shown < total) appendPaperLine(kind);
+      else if (state.shown) state.review = state.shown - 1;
+      renderPaper(kind);
+      renderVerdict();
+      const rows = state.lines.querySelectorAll(".paper-line");
+      if (rows.length) rows[state.review].scrollIntoView({ behavior: "smooth", block: "nearest" });
+    }
+
+    function reviewPrevious(kind) {
+      const state = papers[kind];
+      if (state.review > 0) state.review--;
+      const rows = state.lines.querySelectorAll(".paper-line");
+      if (rows[state.review]) rows[state.review].scrollIntoView({ behavior: "smooth", block: "nearest" });
+    }
+
+    function showPaper(kind) {
+      const state = papers[kind];
+      while (state.shown < exercises[activeExercise][kind].length) appendPaperLine(kind);
+      renderPaper(kind);
+      renderVerdict();
+      const rows = state.lines.querySelectorAll(".paper-line");
+      if (rows.length) rows[rows.length - 1].scrollIntoView({ behavior: "smooth", block: "nearest" });
+    }
+
+    function resetPapers() {
+      Object.keys(papers).forEach(kind => {
+        papers[kind].lines.replaceChildren();
+        papers[kind].shown = 0;
+        papers[kind].review = -1;
+      });
+      renderExercise();
+    }
+
+    document.querySelectorAll(".choice").forEach(button => {
+      button.addEventListener("click", () => {
+        activeExercise = button.dataset.exercise;
+        resetPapers();
+      });
+    });
+    ["superposition", "homogeneity"].forEach(kind => {
+      const prefix = kind === "superposition" ? "superposition" : "homogeneity";
+      document.querySelector(`#${prefix}-next`).addEventListener("click", () => advancePaper(kind));
+      document.querySelector(`#${prefix}-back`).addEventListener("click", () => reviewPrevious(kind));
+      document.querySelector(`#${prefix}-all`).addEventListener("click", () => showPaper(kind));
+    });
+    document.querySelector("#reset-button").addEventListener("click", resetPapers);
+
+    function drawCurve(group, transform, fixed, vertical) {
+      const path = document.createElementNS(svgNS, "path");
+      const samples = [];
+      for (let i = 0; i <= 40; i++) {
+        const t = -2 + i / 10;
+        const source = vertical ? transform(fixed, t) : transform(t, fixed);
+        samples.push(`${i === 0 ? "M" : "L"}${point(source.x, source.y)}`);
+      }
+      path.setAttribute("d", samples.join(" "));
+      group.append(path);
+    }
+
+    function drawGrid(group, transform) {
+      group.replaceChildren();
+      for (let i = -2; i <= 2; i++) {
+        drawCurve(group, transform, i, true);
+        drawCurve(group, transform, i, false);
+      }
+    }
+
+    function updateGraphA() {
+      const a = Number(document.querySelector("#a-m11").value);
+      const b = Number(document.querySelector("#a-m12").value);
+      const c = Number(document.querySelector("#a-m21").value);
+      const d = Number(document.querySelector("#a-m22").value);
+      const identity = (u, v) => ({ x: u, y: v });
+      const transform = (u, v) => ({ x: a * u + b * v, y: c * u + d * v });
+      drawGrid(document.querySelector("#original-a"), identity);
+      drawGrid(document.querySelector("#mapped-a"), transform);
+      [["a-m11-value", a], ["a-m12-value", b], ["a-m21-value", c], ["a-m22-value", d]]
+        .forEach(([id, value]) => { document.querySelector(`#${id}`).textContent = value.toFixed(1); });
+      const result = transform(1, 1);
+      document.querySelector("#vector-a-input").setAttribute("d", `M${point(0, 0)} L${point(1, 1)}`);
+      document.querySelector("#vector-a-output").setAttribute("d", `M${point(0, 0)} L${point(result.x, result.y)}`);
+      document.querySelector("#point-a").setAttribute("cx", center.x + result.x * graphScale);
+      document.querySelector("#point-a").setAttribute("cy", center.y - result.y * graphScale);
+      document.querySelector("#a-matrix-readout").textContent =
+        `A = [ ${a.toFixed(1)}  ${b.toFixed(1)} ; ${c.toFixed(1)}  ${d.toFixed(1)} ]   T_A(1, 1) = (${result.x.toFixed(1)}, ${result.y.toFixed(1)})`;
+      if (activeExercise === "a") {
+        document.querySelector("#exercise-rule").textContent =
+          `T_A(x, y) = (${a.toFixed(1)}x + ${b.toFixed(1)}y, ${c.toFixed(1)}x + ${d.toFixed(1)}y)`;
+      }
+    }
+
+    function updateGraphB() {
+      const y1 = Number(document.querySelector("#b-y1").value);
+      const y2 = Number(document.querySelector("#b-y2").value);
+      const beta = Number(document.querySelector("#b-beta").value);
+      const identity = (u, v) => ({ x: u, y: v });
+      const transform = (u, v) => ({ x: u + beta * v * v, y: v });
+      drawGrid(document.querySelector("#original-b"), identity);
+      drawGrid(document.querySelector("#mapped-b"), transform);
+      document.querySelector("#b-y1-value").textContent = y1.toFixed(1);
+      document.querySelector("#b-y2-value").textContent = y2.toFixed(1);
+      document.querySelector("#b-beta-value").textContent = beta.toFixed(2);
+      const ySum = y1 + y2;
+      const combinedX = beta * ySum * ySum;
+      const separateX = beta * (y1 * y1 + y2 * y2);
+      document.querySelector("#vector-b-combined").setAttribute("d", `M${point(0, 0)} L${point(combinedX, ySum)}`);
+      document.querySelector("#vector-b-separate").setAttribute("d", `M${point(0, 0)} L${point(separateX, ySum)}`);
+      document.querySelector("#point-b-combined").setAttribute("cx", center.x + combinedX * graphScale);
+      document.querySelector("#point-b-combined").setAttribute("cy", center.y - ySum * graphScale);
+      document.querySelector("#point-b-separate").setAttribute("cx", center.x + separateX * graphScale);
+      document.querySelector("#point-b-separate").setAttribute("cy", center.y - ySum * graphScale);
+      document.querySelector("#difference-b").setAttribute("d", `M${point(combinedX, ySum)} L${point(separateX, ySum)}`);
+      document.querySelector("#b-sum-readout").textContent =
+        `T_B(u + v) = (${combinedX.toFixed(2)}, ${ySum.toFixed(2)})   ·   T_B(u) + T_B(v) = (${separateX.toFixed(2)}, ${ySum.toFixed(2)})`;
+      if (activeExercise === "b") {
+        document.querySelector("#exercise-rule").textContent =
+          `T_B(x, y) = (x + ${beta.toFixed(2)}y², y)`;
+      }
+    }
+
+    ["a-m11", "a-m12", "a-m21", "a-m22"].forEach(id => document.querySelector(`#${id}`).addEventListener("input", updateGraphA));
+    ["b-y1", "b-y2", "b-beta"].forEach(id => document.querySelector(`#${id}`).addEventListener("input", updateGraphB));
+    renderExercise();
+    updateGraphA();
+    updateGraphB();
+
+    const original = document.querySelector("#original");
+    const mapped = document.querySelector("#mapped");
+    const scale = 48;
+    function oldPoint(x, y) { return `${center.x + x * scale},${center.y - y * scale}`; }
+    function drawOldGrid(group, transform) {
+      group.replaceChildren();
+      for (let i = -3; i <= 3; i++) {
+        const lineX = document.createElementNS(svgNS, "path");
+        const lineY = document.createElementNS(svgNS, "path");
+        const a = transform(i, -3), b = transform(i, 3);
+        const c = transform(-3, i), d = transform(3, i);
+        lineX.setAttribute("d", `M${oldPoint(a.x, a.y)} L${oldPoint(b.x, b.y)}`);
+        lineY.setAttribute("d", `M${oldPoint(c.x, c.y)} L${oldPoint(d.x, d.y)}`);
+        group.append(lineX, lineY);
+      }
+    }
+    function updateDemo() {
+      const a = Number(document.querySelector("#sx").value);
+      const k = Number(document.querySelector("#shear").value);
+      const x = Number(document.querySelector("#vx").value);
+      const y = Number(document.querySelector("#vy").value);
+      document.querySelector("#sx-value").textContent = a.toFixed(1);
+      document.querySelector("#shear-value").textContent = k.toFixed(1);
+      document.querySelector("#vx-value").textContent = x.toFixed(1);
+      document.querySelector("#vy-value").textContent = y.toFixed(1);
+      const transform = (u, v) => ({ x: a * u + k * v, y: v });
+      drawOldGrid(original, (u, v) => ({ x: u, y: v }));
+      drawOldGrid(mapped, transform);
+      const result = transform(x, y);
+      document.querySelector("#vector").setAttribute("d", `M${oldPoint(0, 0)} L${oldPoint(result.x, result.y)}`);
+      document.querySelector("#point").setAttribute("cx", center.x + result.x * scale);
+      document.querySelector("#point").setAttribute("cy", center.y - result.y * scale);
+      document.querySelector("#matrix").textContent = `A = [ ${a.toFixed(1)}   ${k.toFixed(1)} ; 0.0   1.0 ]`;
+      document.querySelector("#result").innerHTML = `<strong>T(${x.toFixed(1)}, ${y.toFixed(1)}) = (${result.x.toFixed(2)}, ${result.y.toFixed(2)})</strong>`;
+    }
+    ["sx", "shear", "vx", "vy"].forEach(id => document.querySelector(`#${id}`).addEventListener("input", updateDemo));
+    updateDemo();
+  </script>
+</body>
+</html>
