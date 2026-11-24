@@ -153,6 +153,19 @@
       footer { flex-direction: column; padding-bottom: 90px; }
       .floating-nav { display: none; }
     }
+    @media (min-width: 1200px) and (min-height: 700px) and (min-aspect-ratio: 3/2) {
+      .deck { width: min(1500px, calc(100% - 96px)); }
+      .hero { min-height: 100svh; padding: clamp(48px, 7vh, 88px) 0; }
+      section:not(#guia) {
+        min-height: 100svh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: clamp(32px, 5vh, 60px) 0;
+      }
+      .section-head { margin-bottom: clamp(18px, 3vh, 30px); }
+      .card { padding: clamp(18px, 2vw, 28px); }
+    }
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; }
     }
