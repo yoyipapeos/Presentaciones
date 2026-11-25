@@ -573,6 +573,7 @@
       const axis = Array.from(svg.children).find(element => element.localName === "path" && element.hasAttribute("stroke"));
       svg.insertBefore(grid, axis);
     }
+    let bVectorHead;
     function updateExerciseVector(id, offset) {
       const x = Number(document.querySelector(`#${id}-vector-x`).value);
       const y = Number(document.querySelector(`#${id}-vector-y`).value);
@@ -581,6 +582,27 @@
       document.querySelector(`#${id}-vector-y-value`).textContent = y.toFixed(0);
       document.querySelector(`#${id}-vector-input`).setAttribute("d", `M${plotPoint(0, 0, 43)} L${plotPoint(x, y, 43)}`);
       document.querySelector(`#${id}-vector-output`).setAttribute("d", `M${plotPoint(0, 0, 43)} L${plotPoint(image.x, image.y, 43)}`);
+      if (id === "b") {
+        const tipX = 210 + image.x * 43;
+        const tipY = 170 - image.y * 43;
+        const dx = tipX - 210;
+        const dy = tipY - 170;
+        const length = Math.hypot(dx, dy);
+        if (length > 0) {
+          const ux = dx / length;
+          const uy = dy / length;
+          const baseX = tipX - ux * 15;
+          const baseY = tipY - uy * 15;
+          const sideX = -uy * 7;
+          const sideY = ux * 7;
+          bVectorHead.setAttribute(
+            "d",
+            `M${tipX},${tipY} L${baseX + sideX},${baseY + sideY} L${baseX - sideX},${baseY - sideY} Z`
+          );
+        } else {
+          bVectorHead.setAttribute("d", "");
+        }
+      }
       document.querySelector(`#${id}-vector-readout`).textContent =
         `v = (${x.toFixed(0)}, ${y.toFixed(0)})  →  T(v) = (${image.x.toFixed(1)}, ${image.y.toFixed(0)})`;
     }
@@ -588,6 +610,14 @@
       const svg = document.querySelector(`#${id}-vector-input`).ownerSVGElement;
       drawCountableGrid(svg, 43, 4, 3);
       document.querySelector(`#${id}-vector-point`).remove();
+      if (id === "b") {
+        const output = document.querySelector("#b-vector-output");
+        output.removeAttribute("marker-end");
+        bVectorHead = document.createElementNS("http://www.w3.org/2000/svg", "path");
+        bVectorHead.setAttribute("id", "b-vector-head");
+        bVectorHead.setAttribute("fill", "#d04a78");
+        output.after(bVectorHead);
+      }
       ["x", "y"].forEach(axis => {
         const input = document.querySelector(`#${id}-vector-${axis}`);
         input.step = "1";
