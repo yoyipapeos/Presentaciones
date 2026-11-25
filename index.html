@@ -406,6 +406,7 @@
       a: {
         superposition: [
           "Sean v₁ = (x₁, y₁), v₂ = (x₂, y₂) ∈ R².",
+          "T(v₁ + v₂) = T(v₁) + T(v₂)  ← Aplicamos la fórmula de superposición",
           "T(v₁ + v₂) = T(x₁ + x₂, y₁ + y₂)",
           "= (x₁ + x₂ + 0.5(y₁ + y₂), y₁ + y₂)",
           "= (x₁ + 0.5y₁, y₁) + (x₂ + 0.5y₂, y₂)",
@@ -413,6 +414,7 @@
         ],
         homogeneity: [
           "Sea a ∈ R y v₁ = (x₁, y₁) ∈ R².",
+          "T(av₁) = aT(v₁)  ← Aplicamos la fórmula de homogeneidad",
           "T(av₁) = T(ax₁, ay₁)",
           "= (ax₁ + 0.5ay₁, ay₁)",
           "= a(x₁ + 0.5y₁, y₁)",
@@ -422,12 +424,15 @@
       b: {
         superposition: [
           "Sean v₁ = (x₁, y₁), v₂ = (x₂, y₂) ∈ R².",
-          "T(v₁ + v₂) = (x₁ + x₂ + 0.5(y₁ + y₂) + 1, y₁ + y₂)",
+          "T(v₁ + v₂) = T(v₁) + T(v₂)  ← Aplicamos la fórmula de superposición",
+          "T(v₁ + v₂) = T(x₁ + x₂, y₁ + y₂)",
+          "= (x₁ + x₂ + 0.5(y₁ + y₂) + 1, y₁ + y₂)",
           "T(v₁) + T(v₂) = (x₁ + x₂ + 0.5(y₁ + y₂) + 2, y₁ + y₂)",
           "T(v₁ + v₂) ≠ T(v₁) + T(v₂)  ✗"
         ],
         homogeneity: [
           "Sea a ∈ R y v₁ = (x₁, y₁) ∈ R².",
+          "T(av₁) = aT(v₁)  ← Aplicamos la fórmula de homogeneidad",
           "T(av₁) = (ax₁ + 0.5ay₁ + 1, ay₁)",
           "aT(v₁) = (ax₁ + 0.5ay₁ + a, ay₁)",
           "Por ejemplo, a = 2: las primeras coordenadas difieren en 1.",
