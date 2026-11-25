@@ -140,6 +140,15 @@
     .graph-readout { padding: 10px 12px; border-radius: 10px; color: #17243b; background: #dce8f4; font: 1rem/1.6 "Cambria Math", Cambria, Georgia, serif; overflow-wrap: anywhere; }
     .graph-legend { display: flex; flex-wrap: wrap; gap: 14px; color: #43516a; font-size: .9rem; }
     .graph-legend span::before { content: ""; display: inline-block; width: 12px; height: 12px; margin-right: 6px; border-radius: 50%; background: currentColor; }
+    .interactive-graph { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(270px, .85fr); gap: 18px; align-items: center; }
+    .graph-visual { min-width: 0; }
+    .interactive-graph svg { width: min(100%, 500px); max-height: 42vh; margin: 0 auto 6px; }
+    .interactive-graph .graph-caption { min-height: 0; margin: 4px 0; text-align: center; }
+    .graph-settings { display: grid; gap: 14px; align-content: center; min-width: 0; }
+    .graph-settings .graph-controls { gap: 10px; }
+    .graph-result { padding: 12px 14px; border-radius: 12px; color: #17243b; background: #dce8f4; }
+    .graph-result-label { color: #43516a; font-size: .85rem; font-weight: 750; text-transform: uppercase; letter-spacing: .06em; }
+    .graph-result .graph-readout { padding: 4px 0 0; background: transparent; font-size: clamp(1rem, 1.7vw, 1.25rem); font-weight: 700; }
     .verdict { display: none; margin-top: 20px; padding: 18px 22px; border-radius: 14px; font-size: clamp(1.25rem, 3vw, 1.8rem); font-weight: 800; text-align: center; }
     .verdict.visible { display: block; }
     .verdict.yes { color: #17663e; background: #8fe3a533; border: 1px solid #8fe3a5; }
@@ -182,6 +191,9 @@
       .paper-controls { display: grid; grid-template-columns: 1fr 1fr; }
       .paper-controls .button { width: 100%; }
       .paper-lines.proof-columns { grid-template-columns: 1fr; }
+      .interactive-graph { grid-template-columns: 1fr; }
+      .interactive-graph svg { max-height: 260px; }
+      .graph-settings { gap: 10px; }
       footer { flex-direction: column; padding-bottom: 90px; }
       .floating-nav { display: none; }
     }
@@ -275,7 +287,23 @@
         <div class="law"><h4>Homogeneidad</h4><div class="formula">T(a v₁) = aT(v₁)</div></div>
         <article class="paper"><h3>Comprobación de homogeneidad</h3><div class="paper-lines proof-columns" id="a-homogeneity-lines" aria-live="polite"></div><div class="proof-comparison match" id="a-homogeneity-comparison" hidden>Los dos lados son iguales. Se cumple la propiedad de homogeneidad.</div><div class="paper-progress"><span id="a-homogeneity-progress"></span></div><div class="paper-controls"><button class="button secondary" type="button" id="a-homogeneity-back">Anterior</button><button class="button" type="button" id="a-homogeneity-next">Avanzar</button><button class="button quiet" type="button" id="a-homogeneity-all">Mostrar todo</button></div></article>
         <div class="verdict" id="a-verdict" aria-live="polite"></div>
-        <article class="graph-paper"><h3>Gráfica A · cizalla lineal</h3><svg viewBox="0 0 420 340" role="img" aria-label="Vector v y su imagen T(v) para la transformación T(x,y)=(x+0.5y,y)"><defs><marker id="arrow-a-input" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="#66758c"/></marker><marker id="arrow-a-output" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="#d04a78"/></marker></defs><path d="M30 170H390M210 310V30" stroke="#9ba8b8"/><path id="a-vector-input" fill="none" stroke="#66758c" stroke-width="3" stroke-dasharray="6 4" marker-end="url(#arrow-a-input)"/><path id="a-vector-output" fill="none" stroke="#d04a78" stroke-width="4" marker-end="url(#arrow-a-output)"/><circle id="a-vector-point" r="5" fill="#d04a78"/></svg><p class="graph-caption">Ajusta v = (x, y) y observa su imagen T(v).</p><div class="graph-controls controls"><div><label for="a-vector-x">Componente x: <span id="a-vector-x-value">1.0</span></label><input id="a-vector-x" type="range" min="-2" max="2" value="1" step="0.1"></div><div><label for="a-vector-y">Componente y: <span id="a-vector-y-value">1.0</span></label><input id="a-vector-y" type="range" min="-2" max="2" value="1" step="0.1"></div></div><div class="graph-readout" id="a-vector-readout"></div><div class="graph-legend"><span style="color:#66758c">v</span><span style="color:#d04a78">T(v)</span></div></article>
+        <article class="graph-paper">
+          <h3>Gráfica A · cizalla lineal</h3>
+          <div class="interactive-graph">
+            <div class="graph-visual">
+              <svg viewBox="0 0 420 340" role="img" aria-label="Vector v y su imagen T(v) para la transformación T(x,y)=(x+0.5y,y)"><defs><marker id="arrow-a-input" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="#66758c"/></marker><marker id="arrow-a-output" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="#d04a78"/></marker></defs><path d="M30 170H390M210 310V30" stroke="#9ba8b8"/><path id="a-vector-input" fill="none" stroke="#66758c" stroke-width="3" stroke-dasharray="6 4" marker-end="url(#arrow-a-input)"/><path id="a-vector-output" fill="none" stroke="#d04a78" stroke-width="4" marker-end="url(#arrow-a-output)"/><circle id="a-vector-point" r="5" fill="#d04a78"/></svg>
+              <p class="graph-caption">Ajusta las componentes de entrada y observa cómo cambia el vector.</p>
+            </div>
+            <div class="graph-settings">
+              <div class="graph-controls controls">
+                <div><label for="a-vector-x">Componente x: <span id="a-vector-x-value">1.0</span></label><input id="a-vector-x" type="range" min="-2" max="2" value="1" step="0.5"></div>
+                <div><label for="a-vector-y">Componente y: <span id="a-vector-y-value">1.0</span></label><input id="a-vector-y" type="range" min="-2" max="2" value="1" step="0.5"></div>
+              </div>
+              <div class="graph-result"><div class="graph-result-label">Resultado de aplicar T</div><div class="graph-readout" id="a-vector-readout"></div></div>
+              <div class="graph-legend"><span style="color:#66758c">v</span><span style="color:#d04a78">T(v)</span></div>
+            </div>
+          </div>
+        </article>
       </article>
       <article class="wizard exercise-block" aria-labelledby="exercise-b-heading">
         <h3 id="exercise-b-heading">Ejercicio B · No es transformación lineal</h3>
@@ -285,7 +313,23 @@
         <div class="law"><h4>Homogeneidad</h4><div class="formula">T(a v₁) = aT(v₁)</div></div>
         <article class="paper"><h3>Comprobación de homogeneidad</h3><div class="paper-lines proof-columns" id="b-homogeneity-lines" aria-live="polite"></div><div class="proof-comparison mismatch" id="b-homogeneity-comparison" hidden>Por ejemplo, con a = 2, el término constante es 1 en el lado izquierdo y 2 en el derecho. No son iguales y falla la homogeneidad.</div><div class="paper-progress"><span id="b-homogeneity-progress"></span></div><div class="paper-controls"><button class="button secondary" type="button" id="b-homogeneity-back">Anterior</button><button class="button" type="button" id="b-homogeneity-next">Avanzar</button><button class="button quiet" type="button" id="b-homogeneity-all">Mostrar todo</button></div></article>
         <div class="verdict" id="b-verdict" aria-live="polite"></div>
-        <article class="graph-paper"><h3>Gráfica B · traslación que no conserva el origen</h3><svg viewBox="0 0 420 340" role="img" aria-label="Vector v y su imagen T(v) para la transformación T(x,y)=(x+0.5y+1,y)"><defs><marker id="arrow-b-input" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="#66758c"/></marker><marker id="arrow-b-output" markerWidth="8" markerHeight="8" refX="6" markerY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="#d04a78"/></marker></defs><path d="M30 170H390M210 310V30" stroke="#9ba8b8"/><path id="b-vector-input" fill="none" stroke="#66758c" stroke-width="3" stroke-dasharray="6 4" marker-end="url(#arrow-b-input)"/><path id="b-vector-output" fill="none" stroke="#d04a78" stroke-width="4" marker-end="url(#arrow-b-output)"/><circle id="b-vector-point" r="5" fill="#d04a78"/></svg><p class="graph-caption">Ajusta v = (x, y) y observa cómo la traslación modifica T(v).</p><div class="graph-controls controls"><div><label for="b-vector-x">Componente x: <span id="b-vector-x-value">1.0</span></label><input id="b-vector-x" type="range" min="-2" max="2" value="1" step="0.1"></div><div><label for="b-vector-y">Componente y: <span id="b-vector-y-value">1.0</span></label><input id="b-vector-y" type="range" min="-2" max="2" value="1" step="0.1"></div></div><div class="graph-readout" id="b-vector-readout"></div><div class="graph-legend"><span style="color:#66758c">v</span><span style="color:#d04a78">T(v)</span></div></article>
+        <article class="graph-paper">
+          <h3>Gráfica B · traslación que no conserva el origen</h3>
+          <div class="interactive-graph">
+            <div class="graph-visual">
+              <svg viewBox="0 0 420 340" role="img" aria-label="Vector v y su imagen T(v) para la transformación T(x,y)=(x+0.5y+1,y)"><defs><marker id="arrow-b-input" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="#66758c"/></marker><marker id="arrow-b-output" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="#d04a78"/></marker></defs><path d="M30 170H390M210 310V30" stroke="#9ba8b8"/><path id="b-vector-input" fill="none" stroke="#66758c" stroke-width="3" stroke-dasharray="6 4" marker-end="url(#arrow-b-input)"/><path id="b-vector-output" fill="none" stroke="#d04a78" stroke-width="4" marker-end="url(#arrow-b-output)"/><circle id="b-vector-point" r="5" fill="#d04a78"/></svg>
+              <p class="graph-caption">Ajusta la entrada y observa el efecto de la traslación.</p>
+            </div>
+            <div class="graph-settings">
+              <div class="graph-controls controls">
+                <div><label for="b-vector-x">Componente x: <span id="b-vector-x-value">1.0</span></label><input id="b-vector-x" type="range" min="-2" max="2" value="1" step="0.5"></div>
+                <div><label for="b-vector-y">Componente y: <span id="b-vector-y-value">1.0</span></label><input id="b-vector-y" type="range" min="-2" max="2" value="1" step="0.5"></div>
+              </div>
+              <div class="graph-result"><div class="graph-result-label">Resultado de aplicar T</div><div class="graph-readout" id="b-vector-readout"></div></div>
+              <div class="graph-legend"><span style="color:#66758c">v</span><span style="color:#d04a78">T(v)</span></div>
+            </div>
+          </div>
+        </article>
       </article>
       <button class="button secondary" type="button" id="reset-new-exercises">↺ Reiniciar los dos ejercicios</button>
       <div class="section-next"><a class="button" href="#cierre">Ir a la conclusión <span aria-hidden="true">↓</span></a></div>
@@ -614,12 +658,13 @@
       svg.insertBefore(grid, axis);
     }
     let bVectorHead;
+    const formatVectorComponent = value => String(Number(value.toFixed(2)));
     function updateExerciseVector(id, offset) {
       const x = Number(document.querySelector(`#${id}-vector-x`).value);
       const y = Number(document.querySelector(`#${id}-vector-y`).value);
       const image = { x: x + 0.5 * y + offset, y };
-      document.querySelector(`#${id}-vector-x-value`).textContent = x.toFixed(0);
-      document.querySelector(`#${id}-vector-y-value`).textContent = y.toFixed(0);
+      document.querySelector(`#${id}-vector-x-value`).textContent = x.toFixed(1);
+      document.querySelector(`#${id}-vector-y-value`).textContent = y.toFixed(1);
       document.querySelector(`#${id}-vector-input`).setAttribute("d", `M${plotPoint(0, 0, 43)} L${plotPoint(x, y, 43)}`);
       document.querySelector(`#${id}-vector-output`).setAttribute("d", `M${plotPoint(0, 0, 43)} L${plotPoint(image.x, image.y, 43)}`);
       if (id === "b") {
@@ -644,7 +689,7 @@
         }
       }
       document.querySelector(`#${id}-vector-readout`).textContent =
-        `v = (${x.toFixed(0)}, ${y.toFixed(0)})  →  T(v) = (${image.x.toFixed(1)}, ${image.y.toFixed(0)})`;
+        `v = (${formatVectorComponent(x)}, ${formatVectorComponent(y)})  →  T(v) = (${formatVectorComponent(image.x)}, ${formatVectorComponent(image.y)})`;
     }
     for (const [id, offset] of [["a", 0], ["b", 1]]) {
       const svg = document.querySelector(`#${id}-vector-input`).ownerSVGElement;
@@ -660,7 +705,7 @@
       }
       ["x", "y"].forEach(axis => {
         const input = document.querySelector(`#${id}-vector-${axis}`);
-        input.step = "1";
+        input.step = "0.5";
         input.addEventListener("input", () => updateExerciseVector(id, offset));
       });
       updateExerciseVector(id, offset);
