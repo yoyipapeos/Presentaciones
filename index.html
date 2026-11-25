@@ -104,6 +104,7 @@
     .paper h3, .graph-paper h3 { color: #70459a; margin: 0 0 10px; }
     .paper-lines { min-height: 120px; }
     .paper-lines.proof-columns { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+    .proof-intro { grid-column: 1 / -1; }
     .paper-side { min-width: 0; }
     .paper-side h4 { margin: 8px 0; color: #c64035; font: 700 1rem/1.4 "Segoe UI", system-ui, sans-serif; }
     .proof-comparison { margin-top: 16px; padding: 14px 16px; border-radius: 12px; font-weight: 700; }
@@ -234,9 +235,9 @@
         <h3 id="exercise-a-heading">Ejercicio A · Transformación lineal</h3>
         <div class="exercise-box"><div class="tag">Regla de correspondencia</div><div class="formula">T(x, y) = (x + 0.5y, y)</div></div>
         <div class="law"><h4>Superposición</h4><div class="formula">T(v₁ + v₂) = T(v₁) + T(v₂)</div></div>
-        <article class="paper"><h3>Comprobación de superposición</h3><p>Sean v₁ = (x₁, y₁), v₂ = (x₂, y₂) ∈ R². Comparamos ambos lados de la fórmula.</p><div class="paper-lines proof-columns" id="a-superposition-lines" aria-live="polite"></div><div class="proof-comparison match" id="a-superposition-comparison" hidden>Los dos lados son iguales. Se cumple la propiedad de superposición.</div><div class="paper-progress"><span id="a-superposition-progress"></span></div><div class="paper-controls"><button class="button secondary" type="button" id="a-superposition-back">Anterior</button><button class="button" type="button" id="a-superposition-next">Avanzar</button><button class="button quiet" type="button" id="a-superposition-all">Mostrar todo</button></div></article>
+        <article class="paper"><h3>Comprobación de superposición</h3><div class="paper-lines proof-columns" id="a-superposition-lines" aria-live="polite"></div><div class="proof-comparison match" id="a-superposition-comparison" hidden>Los dos lados son iguales. Se cumple la propiedad de superposición.</div><div class="paper-progress"><span id="a-superposition-progress"></span></div><div class="paper-controls"><button class="button secondary" type="button" id="a-superposition-back">Anterior</button><button class="button" type="button" id="a-superposition-next">Avanzar</button><button class="button quiet" type="button" id="a-superposition-all">Mostrar todo</button></div></article>
         <div class="law"><h4>Homogeneidad</h4><div class="formula">T(a v₁) = aT(v₁)</div></div>
-        <article class="paper"><h3>Comprobación de homogeneidad</h3><p>Sea v₁ = (x₁, y₁) ∈ R² y α ∈ R. Comparamos ambos lados de la fórmula.</p><div class="paper-lines proof-columns" id="a-homogeneity-lines" aria-live="polite"></div><div class="proof-comparison match" id="a-homogeneity-comparison" hidden>Los dos lados son iguales. Se cumple la propiedad de homogeneidad.</div><div class="paper-progress"><span id="a-homogeneity-progress"></span></div><div class="paper-controls"><button class="button secondary" type="button" id="a-homogeneity-back">Anterior</button><button class="button" type="button" id="a-homogeneity-next">Avanzar</button><button class="button quiet" type="button" id="a-homogeneity-all">Mostrar todo</button></div></article>
+        <article class="paper"><h3>Comprobación de homogeneidad</h3><div class="paper-lines proof-columns" id="a-homogeneity-lines" aria-live="polite"></div><div class="proof-comparison match" id="a-homogeneity-comparison" hidden>Los dos lados son iguales. Se cumple la propiedad de homogeneidad.</div><div class="paper-progress"><span id="a-homogeneity-progress"></span></div><div class="paper-controls"><button class="button secondary" type="button" id="a-homogeneity-back">Anterior</button><button class="button" type="button" id="a-homogeneity-next">Avanzar</button><button class="button quiet" type="button" id="a-homogeneity-all">Mostrar todo</button></div></article>
         <div class="verdict" id="a-verdict" aria-live="polite"></div>
         <article class="graph-paper"><h3>Gráfica A · cizalla lineal</h3><svg viewBox="0 0 420 340" role="img" aria-label="Plano cartesiano: T(x,y)=(x+0.5y,y) inclina la cuadrícula conservando el origen"><g id="a-original" fill="none" stroke="#66758c" stroke-opacity=".45"></g><g id="a-mapped" fill="none" stroke="#1885cb" stroke-width="2"></g><path d="M30 170H390M210 310V30" stroke="#9ba8b8"/></svg><p class="graph-caption">La cuadrícula se inclina, pero el origen permanece fijo.</p></article>
       </article>
@@ -244,9 +245,9 @@
         <h3 id="exercise-b-heading">Ejercicio B · No es transformación lineal</h3>
         <div class="exercise-box"><div class="tag">Regla de correspondencia</div><div class="formula">T(x, y) = (x + 0.5y + 1, y)</div></div>
         <div class="law"><h4>Superposición</h4><div class="formula">T(v₁ + v₂) = T(v₁) + T(v₂)</div></div>
-        <article class="paper"><h3>Comprobación de superposición</h3><p>Sean v₁ = (x₁, y₁), v₂ = (x₂, y₂) ∈ R². Comparamos ambos lados de la fórmula.</p><div class="paper-lines proof-columns" id="b-superposition-lines" aria-live="polite"></div><div class="proof-comparison mismatch" id="b-superposition-comparison" hidden>Los resultados difieren: el lado izquierdo suma 1 y el derecho suma 2 en la primera coordenada. No se cumple la superposición.</div><div class="paper-progress"><span id="b-superposition-progress"></span></div><div class="paper-controls"><button class="button secondary" type="button" id="b-superposition-back">Anterior</button><button class="button" type="button" id="b-superposition-next">Avanzar</button><button class="button quiet" type="button" id="b-superposition-all">Mostrar todo</button></div></article>
+        <article class="paper"><h3>Comprobación de superposición</h3><div class="paper-lines proof-columns" id="b-superposition-lines" aria-live="polite"></div><div class="proof-comparison mismatch" id="b-superposition-comparison" hidden>Los resultados difieren: el lado izquierdo suma 1 y el derecho suma 2 en la primera coordenada. No se cumple la superposición.</div><div class="paper-progress"><span id="b-superposition-progress"></span></div><div class="paper-controls"><button class="button secondary" type="button" id="b-superposition-back">Anterior</button><button class="button" type="button" id="b-superposition-next">Avanzar</button><button class="button quiet" type="button" id="b-superposition-all">Mostrar todo</button></div></article>
         <div class="law"><h4>Homogeneidad</h4><div class="formula">T(a v₁) = aT(v₁)</div></div>
-        <article class="paper"><h3>Comprobación de homogeneidad</h3><p>Sea v₁ = (x₁, y₁) ∈ R² y α ∈ R. Comparamos ambos lados de la fórmula.</p><div class="paper-lines proof-columns" id="b-homogeneity-lines" aria-live="polite"></div><div class="proof-comparison mismatch" id="b-homogeneity-comparison" hidden>Por ejemplo, con α = 2, el término constante es 1 en el lado izquierdo y 2 en el derecho. No son iguales y falla la homogeneidad.</div><div class="paper-progress"><span id="b-homogeneity-progress"></span></div><div class="paper-controls"><button class="button secondary" type="button" id="b-homogeneity-back">Anterior</button><button class="button" type="button" id="b-homogeneity-next">Avanzar</button><button class="button quiet" type="button" id="b-homogeneity-all">Mostrar todo</button></div></article>
+        <article class="paper"><h3>Comprobación de homogeneidad</h3><div class="paper-lines proof-columns" id="b-homogeneity-lines" aria-live="polite"></div><div class="proof-comparison mismatch" id="b-homogeneity-comparison" hidden>Por ejemplo, con a = 2, el término constante es 1 en el lado izquierdo y 2 en el derecho. No son iguales y falla la homogeneidad.</div><div class="paper-progress"><span id="b-homogeneity-progress"></span></div><div class="paper-controls"><button class="button secondary" type="button" id="b-homogeneity-back">Anterior</button><button class="button" type="button" id="b-homogeneity-next">Avanzar</button><button class="button quiet" type="button" id="b-homogeneity-all">Mostrar todo</button></div></article>
         <div class="verdict" id="b-verdict" aria-live="polite"></div>
         <article class="graph-paper"><h3>Gráfica B · traslación que no conserva el origen</h3><svg viewBox="0 0 420 340" role="img" aria-label="Plano cartesiano: T(x,y)=(x+0.5y+1,y) desplaza la cuadrícula y no conserva el origen"><g id="b-original" fill="none" stroke="#66758c" stroke-opacity=".45"></g><g id="b-mapped" fill="none" stroke="#d04a78" stroke-width="2"></g><path d="M30 170H390M210 310V30" stroke="#9ba8b8"/></svg><p class="graph-caption">La cuadrícula se desplaza y T(0,0) = (1,0), no el origen.</p></article>
       </article>
@@ -413,38 +414,58 @@
     const proofSteps = {
       a: {
         superposition: [
-          { side: "left", text: "T(v₁ + v₂) = T((x₁, y₁) + (x₂, y₂))" },
-          { side: "left", text: "= T(x₁ + x₂, y₁ + y₂)" },
-          { side: "left", text: "= ((x₁ + x₂) + 0.5(y₁ + y₂), y₁ + y₂)" },
-          { side: "right", text: "T(v₁) + T(v₂) = T(x₁, y₁) + T(x₂, y₂)" },
-          { side: "right", text: "= (x₁ + 0.5y₁, y₁) + (x₂ + 0.5y₂, y₂)" },
-          { side: "right", text: "= ((x₁ + x₂) + 0.5(y₁ + y₂), y₁ + y₂)" }
+          { type: "intro", text: "Sean v₁ = (x₁, y₁), v₂ = (x₂, y₂) ∈ R²." },
+          { type: "formula", text: "T(v₁ + v₂) = T(v₁) + T(v₂)" },
+          { type: "formula", text: "T((x₁, y₁) + (x₂, y₂)) = T(x₁, y₁) + T(x₂, y₂)" },
+          { type: "side", side: "left", text: "Lado izquierdo" },
+          { type: "row", side: "left", text: "T(v₁ + v₂) = T((x₁, y₁) + (x₂, y₂))" },
+          { type: "row", side: "left", text: "= T(x₁ + x₂, y₁ + y₂)" },
+          { type: "row", side: "left", text: "= ((x₁ + x₂) + 0.5(y₁ + y₂), y₁ + y₂)" },
+          { type: "side", side: "right", text: "Lado derecho" },
+          { type: "row", side: "right", text: "T(v₁) + T(v₂) = T(x₁, y₁) + T(x₂, y₂)" },
+          { type: "row", side: "right", text: "= (x₁ + 0.5y₁, y₁) + (x₂ + 0.5y₂, y₂)" },
+          { type: "row", side: "right", text: "= ((x₁ + x₂) + 0.5(y₁ + y₂), y₁ + y₂)" }
         ],
         homogeneity: [
-          { side: "left", text: "T(αv₁) = T(α(x₁, y₁))" },
-          { side: "left", text: "= T(αx₁, αy₁)" },
-          { side: "left", text: "= (αx₁ + 0.5αy₁, αy₁)" },
-          { side: "right", text: "αT(v₁) = αT(x₁, y₁)" },
-          { side: "right", text: "= α(x₁ + 0.5y₁, y₁)" },
-          { side: "right", text: "= (αx₁ + 0.5αy₁, αy₁)" }
+          { type: "intro", text: "Sea v₁ = (x₁, y₁) ∈ R² y a ∈ R." },
+          { type: "formula", text: "T(av₁) = aT(v₁)" },
+          { type: "formula", text: "T(a(x₁, y₁)) = aT(x₁, y₁)" },
+          { type: "side", side: "left", text: "Lado izquierdo" },
+          { type: "row", side: "left", text: "T(av₁) = T(a(x₁, y₁))" },
+          { type: "row", side: "left", text: "= T(ax₁, ay₁)" },
+          { type: "row", side: "left", text: "= (ax₁ + 0.5ay₁, ay₁)" },
+          { type: "side", side: "right", text: "Lado derecho" },
+          { type: "row", side: "right", text: "aT(v₁) = aT(x₁, y₁)" },
+          { type: "row", side: "right", text: "= a(x₁ + 0.5y₁, y₁)" },
+          { type: "row", side: "right", text: "= (ax₁ + 0.5ay₁, ay₁)" }
         ]
       },
       b: {
         superposition: [
-          { side: "left", text: "T(v₁ + v₂) = T((x₁, y₁) + (x₂, y₂))" },
-          { side: "left", text: "= T(x₁ + x₂, y₁ + y₂)" },
-          { side: "left", text: "= (x₁ + x₂ + 0.5(y₁ + y₂) + 1, y₁ + y₂)" },
-          { side: "right", text: "T(v₁) + T(v₂) = T(x₁, y₁) + T(x₂, y₂)" },
-          { side: "right", text: "= (x₁ + 0.5y₁ + 1, y₁) + (x₂ + 0.5y₂ + 1, y₂)" },
-          { side: "right", text: "= (x₁ + x₂ + 0.5(y₁ + y₂) + 2, y₁ + y₂)" }
+          { type: "intro", text: "Sean v₁ = (x₁, y₁), v₂ = (x₂, y₂) ∈ R²." },
+          { type: "formula", text: "T(v₁ + v₂) = T(v₁) + T(v₂)" },
+          { type: "formula", text: "T((x₁, y₁) + (x₂, y₂)) = T(x₁, y₁) + T(x₂, y₂)" },
+          { type: "side", side: "left", text: "Lado izquierdo" },
+          { type: "row", side: "left", text: "T(v₁ + v₂) = T((x₁, y₁) + (x₂, y₂))" },
+          { type: "row", side: "left", text: "= T(x₁ + x₂, y₁ + y₂)" },
+          { type: "row", side: "left", text: "= (x₁ + x₂ + 0.5(y₁ + y₂) + 1, y₁ + y₂)" },
+          { type: "side", side: "right", text: "Lado derecho" },
+          { type: "row", side: "right", text: "T(v₁) + T(v₂) = T(x₁, y₁) + T(x₂, y₂)" },
+          { type: "row", side: "right", text: "= (x₁ + 0.5y₁ + 1, y₁) + (x₂ + 0.5y₂ + 1, y₂)" },
+          { type: "row", side: "right", text: "= (x₁ + x₂ + 0.5(y₁ + y₂) + 2, y₁ + y₂)" }
         ],
         homogeneity: [
-          { side: "left", text: "T(αv₁) = T(α(x₁, y₁))" },
-          { side: "left", text: "= T(αx₁, αy₁)" },
-          { side: "left", text: "= (αx₁ + 0.5αy₁ + 1, αy₁)" },
-          { side: "right", text: "αT(v₁) = αT(x₁, y₁)" },
-          { side: "right", text: "= α(x₁ + 0.5y₁ + 1, y₁)" },
-          { side: "right", text: "= (αx₁ + 0.5αy₁ + α, αy₁)" }
+          { type: "intro", text: "Sea v₁ = (x₁, y₁) ∈ R² y a ∈ R." },
+          { type: "formula", text: "T(av₁) = aT(v₁)" },
+          { type: "formula", text: "T(a(x₁, y₁)) = aT(x₁, y₁)" },
+          { type: "side", side: "left", text: "Lado izquierdo" },
+          { type: "row", side: "left", text: "T(av₁) = T(a(x₁, y₁))" },
+          { type: "row", side: "left", text: "= T(ax₁, ay₁)" },
+          { type: "row", side: "left", text: "= (ax₁ + 0.5ay₁ + 1, ay₁)" },
+          { type: "side", side: "right", text: "Lado derecho" },
+          { type: "row", side: "right", text: "aT(v₁) = aT(x₁, y₁)" },
+          { type: "row", side: "right", text: "= a(x₁ + 0.5y₁ + 1, y₁)" },
+          { type: "row", side: "right", text: "= (ax₁ + 0.5ay₁ + a, ay₁)" }
         ]
       }
     };
@@ -460,18 +481,8 @@
         const all = document.querySelector(`#${exercise}-${kind}-all`);
         const verdict = document.querySelector(`#${exercise}-verdict`);
         const renderedRows = [];
-        const sides = {
-          left: document.createElement("div"),
-          right: document.createElement("div")
-        };
+        const sides = { left: null, right: null };
         const comparison = document.querySelector(`#${exercise}-${kind}-comparison`);
-        for (const [side, label] of [["left", "Lado izquierdo"], ["right", "Lado derecho"]]) {
-          const heading = document.createElement("h4");
-          heading.textContent = label;
-          sides[side].className = "paper-side";
-          sides[side].append(heading);
-          lines.append(sides[side]);
-        }
         const render = () => {
           progress.style.width = `${shown / proofSteps[exercise][kind].length * 100}%`;
           back.disabled = shown === 0;
@@ -496,11 +507,25 @@
           const row = document.createElement("div");
           row.className = "paper-line";
           const step = proofSteps[exercise][kind][shown];
-          row.textContent = step.text;
-          if (row.textContent.includes("✓")) row.classList.add("result-yes");
-          if (row.textContent.includes("✗")) row.classList.add("result-no");
-          sides[step.side].append(row);
-          renderedRows.push(row);
+          if (step.type === "intro" || step.type === "formula") {
+            row.classList.add("proof-intro");
+            row.textContent = step.text;
+            lines.append(row);
+            renderedRows.push({ node: row });
+          } else if (step.type === "side") {
+            const column = document.createElement("div");
+            column.className = "paper-side";
+            const heading = document.createElement("h4");
+            heading.textContent = step.text;
+            column.append(heading);
+            lines.append(column);
+            sides[step.side] = column;
+            renderedRows.push({ node: column, side: step.side });
+          } else {
+            row.textContent = step.text;
+            sides[step.side].append(row);
+            renderedRows.push({ node: row });
+          }
           shown++;
           proofState[exercise][kind] = shown;
           render();
@@ -510,7 +535,9 @@
           if (!shown) return;
           shown--;
           proofState[exercise][kind] = shown;
-          renderedRows.pop().remove();
+          const previous = renderedRows.pop();
+          previous.node.remove();
+          if (previous.side) sides[previous.side] = null;
           render();
         });
         all.addEventListener("click", () => {
