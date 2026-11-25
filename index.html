@@ -591,10 +591,10 @@
         if (length > 0) {
           const ux = dx / length;
           const uy = dy / length;
-          const baseX = tipX - ux * 15;
-          const baseY = tipY - uy * 15;
-          const sideX = -uy * 7;
-          const sideY = ux * 7;
+          const baseX = tipX - ux * 18;
+          const baseY = tipY - uy * 18;
+          const sideX = -uy * 9;
+          const sideY = ux * 9;
           bVectorHead.setAttribute(
             "d",
             `M${tipX},${tipY} L${baseX + sideX},${baseY + sideY} L${baseX - sideX},${baseY - sideY} Z`
