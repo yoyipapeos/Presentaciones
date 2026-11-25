@@ -239,7 +239,7 @@
         <div class="law"><h4>Homogeneidad</h4><div class="formula">T(a v₁) = aT(v₁)</div></div>
         <article class="paper"><h3>Comprobación de homogeneidad</h3><div class="paper-lines proof-columns" id="a-homogeneity-lines" aria-live="polite"></div><div class="proof-comparison match" id="a-homogeneity-comparison" hidden>Los dos lados son iguales. Se cumple la propiedad de homogeneidad.</div><div class="paper-progress"><span id="a-homogeneity-progress"></span></div><div class="paper-controls"><button class="button secondary" type="button" id="a-homogeneity-back">Anterior</button><button class="button" type="button" id="a-homogeneity-next">Avanzar</button><button class="button quiet" type="button" id="a-homogeneity-all">Mostrar todo</button></div></article>
         <div class="verdict" id="a-verdict" aria-live="polite"></div>
-        <article class="graph-paper"><h3>Gráfica A · cizalla lineal</h3><svg viewBox="0 0 420 340" role="img" aria-label="Plano cartesiano: T(x,y)=(x+0.5y,y) inclina la cuadrícula conservando el origen"><g id="a-original" fill="none" stroke="#66758c" stroke-opacity=".45"></g><g id="a-mapped" fill="none" stroke="#1885cb" stroke-width="2"></g><path d="M30 170H390M210 310V30" stroke="#9ba8b8"/></svg><p class="graph-caption">La cuadrícula se inclina, pero el origen permanece fijo.</p></article>
+        <article class="graph-paper"><h3>Gráfica A · cizalla lineal</h3><svg viewBox="0 0 420 340" role="img" aria-label="Vector v y su imagen T(v) para la transformación T(x,y)=(x+0.5y,y)"><defs><marker id="arrow-a-input" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="#66758c"/></marker><marker id="arrow-a-output" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="#d04a78"/></marker></defs><path d="M30 170H390M210 310V30" stroke="#9ba8b8"/><path id="a-vector-input" fill="none" stroke="#66758c" stroke-width="3" stroke-dasharray="6 4" marker-end="url(#arrow-a-input)"/><path id="a-vector-output" fill="none" stroke="#d04a78" stroke-width="4" marker-end="url(#arrow-a-output)"/><circle id="a-vector-point" r="5" fill="#d04a78"/></svg><p class="graph-caption">Ajusta v = (x, y) y observa su imagen T(v).</p><div class="graph-controls controls"><div><label for="a-vector-x">Componente x: <span id="a-vector-x-value">1.0</span></label><input id="a-vector-x" type="range" min="-2" max="2" value="1" step="0.1"></div><div><label for="a-vector-y">Componente y: <span id="a-vector-y-value">1.0</span></label><input id="a-vector-y" type="range" min="-2" max="2" value="1" step="0.1"></div></div><div class="graph-readout" id="a-vector-readout"></div><div class="graph-legend"><span style="color:#66758c">v</span><span style="color:#d04a78">T(v)</span></div></article>
       </article>
       <article class="wizard exercise-block" aria-labelledby="exercise-b-heading">
         <h3 id="exercise-b-heading">Ejercicio B · No es transformación lineal</h3>
@@ -249,7 +249,7 @@
         <div class="law"><h4>Homogeneidad</h4><div class="formula">T(a v₁) = aT(v₁)</div></div>
         <article class="paper"><h3>Comprobación de homogeneidad</h3><div class="paper-lines proof-columns" id="b-homogeneity-lines" aria-live="polite"></div><div class="proof-comparison mismatch" id="b-homogeneity-comparison" hidden>Por ejemplo, con a = 2, el término constante es 1 en el lado izquierdo y 2 en el derecho. No son iguales y falla la homogeneidad.</div><div class="paper-progress"><span id="b-homogeneity-progress"></span></div><div class="paper-controls"><button class="button secondary" type="button" id="b-homogeneity-back">Anterior</button><button class="button" type="button" id="b-homogeneity-next">Avanzar</button><button class="button quiet" type="button" id="b-homogeneity-all">Mostrar todo</button></div></article>
         <div class="verdict" id="b-verdict" aria-live="polite"></div>
-        <article class="graph-paper"><h3>Gráfica B · traslación que no conserva el origen</h3><svg viewBox="0 0 420 340" role="img" aria-label="Plano cartesiano: T(x,y)=(x+0.5y+1,y) desplaza la cuadrícula y no conserva el origen"><g id="b-original" fill="none" stroke="#66758c" stroke-opacity=".45"></g><g id="b-mapped" fill="none" stroke="#d04a78" stroke-width="2"></g><path d="M30 170H390M210 310V30" stroke="#9ba8b8"/></svg><p class="graph-caption">La cuadrícula se desplaza y T(0,0) = (1,0), no el origen.</p></article>
+        <article class="graph-paper"><h3>Gráfica B · traslación que no conserva el origen</h3><svg viewBox="0 0 420 340" role="img" aria-label="Vector v y su imagen T(v) para la transformación T(x,y)=(x+0.5y+1,y)"><defs><marker id="arrow-b-input" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="#66758c"/></marker><marker id="arrow-b-output" markerWidth="8" markerHeight="8" refX="6" markerY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="#d04a78"/></marker></defs><path d="M30 170H390M210 310V30" stroke="#9ba8b8"/><path id="b-vector-input" fill="none" stroke="#66758c" stroke-width="3" stroke-dasharray="6 4" marker-end="url(#arrow-b-input)"/><path id="b-vector-output" fill="none" stroke="#d04a78" stroke-width="4" marker-end="url(#arrow-b-output)"/><circle id="b-vector-point" r="5" fill="#d04a78"/></svg><p class="graph-caption">Ajusta v = (x, y) y observa cómo la traslación modifica T(v).</p><div class="graph-controls controls"><div><label for="b-vector-x">Componente x: <span id="b-vector-x-value">1.0</span></label><input id="b-vector-x" type="range" min="-2" max="2" value="1" step="0.1"></div><div><label for="b-vector-y">Componente y: <span id="b-vector-y-value">1.0</span></label><input id="b-vector-y" type="range" min="-2" max="2" value="1" step="0.1"></div></div><div class="graph-readout" id="b-vector-readout"></div><div class="graph-legend"><span style="color:#66758c">v</span><span style="color:#d04a78">T(v)</span></div></article>
       </article>
       <button class="button secondary" type="button" id="reset-new-exercises">↺ Reiniciar los dos ejercicios</button>
     </section>
@@ -358,23 +358,23 @@
     </section>
 
     <section id="demo">
-      <div class="section-head"><div class="number">04 / EXPLORA</div><h2>Una cizalla lineal también puede cambiar la forma</h2></div>
-      <p>Esta transformación con matriz <span class="formula">A = [ a&nbsp; k ; 0&nbsp; 1 ]</span> deforma la cuadrícula, pero sigue siendo lineal porque conserva el origen, las sumas y los múltiplos escalares.</p>
+      <div class="section-head"><div class="number">04 / EXPLORA</div><h2>Una cizalla lineal transforma vectores</h2></div>
+      <p>La regla <span class="formula">T(x, y) = (ax + ky, y)</span> transforma cada vector de entrada. Ajusta la matriz y el vector para comparar v con T(v); como no hay traslación, el origen se conserva.</p>
       <div class="matrix-demo">
         <div class="demo-box">
           <svg id="plot" viewBox="0 0 420 340" role="img" aria-labelledby="plot-title plot-desc">
-            <title id="plot-title">Cuadrícula antes y después de la transformación</title>
-            <desc id="plot-desc">La cuadrícula gris es la original y la rosa es la imagen transformada.</desc>
-            <defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="#66e4dc"/></marker></defs>
-            <g id="original" fill="none" stroke="#9aa7bf" stroke-opacity=".38" stroke-width="1"></g>
-            <g id="mapped" fill="none" stroke="#ff83b5" stroke-opacity=".72" stroke-width="1.5"></g>
+            <title id="plot-title">Vector de entrada y su imagen transformada</title>
+            <desc id="plot-desc">La flecha gris muestra v y la turquesa muestra T(v).</desc>
+            <defs><marker id="arrow-input" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="#9aa7bf"/></marker><marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="#66e4dc"/></marker></defs>
             <path d="M35 170H395M210 310V30" stroke="#ffffff55" stroke-width="1"/>
+            <path id="vector-input" d="" fill="none" stroke="#9aa7bf" stroke-width="3" stroke-dasharray="6 4" marker-end="url(#arrow-input)"/>
+            <circle id="point-input" r="5" fill="#9aa7bf"/>
             <path id="vector" d="" fill="none" stroke="#66e4dc" stroke-width="4" marker-end="url(#arrow)"/>
             <circle id="point" r="5" fill="#66e4dc"/>
             <text x="365" y="160" fill="#a8b2c7" font-size="12">x</text>
             <text x="218" y="42" fill="#a8b2c7" font-size="12">y</text>
           </svg>
-          <p class="hint">Gris: antes · rosa: después · turquesa: vector transformado</p>
+          <p class="hint">Gris: vector v · turquesa: vector transformado T(v)</p>
         </div>
         <div class="demo-box controls">
           <div><label for="sx">Estiramiento horizontal, a: <span id="sx-value" class="accent">1.4</span></label><input id="sx" type="range" min="0.5" max="2.5" value="1.4" step="0.1"></div>
@@ -554,21 +554,24 @@
     });
 
     const plotPoint = (x, y) => `${210 + x * 43},${170 - y * 43}`;
-    function drawExerciseGrid(group, transform) {
-      group.replaceChildren();
-      for (let i = -3; i <= 3; i++) {
-        for (const vertical of [true, false]) {
-          const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
-          const start = vertical ? transform(i, -3) : transform(-3, i);
-          const end = vertical ? transform(i, 3) : transform(3, i);
-          path.setAttribute("d", `M${plotPoint(start.x, start.y)} L${plotPoint(end.x, end.y)}`);
-          group.append(path);
-        }
-      }
+    function updateExerciseVector(id, offset) {
+      const x = Number(document.querySelector(`#${id}-vector-x`).value);
+      const y = Number(document.querySelector(`#${id}-vector-y`).value);
+      const image = { x: x + 0.5 * y + offset, y };
+      document.querySelector(`#${id}-vector-x-value`).textContent = x.toFixed(1);
+      document.querySelector(`#${id}-vector-y-value`).textContent = y.toFixed(1);
+      document.querySelector(`#${id}-vector-input`).setAttribute("d", `M${plotPoint(0, 0)} L${plotPoint(x, y)}`);
+      document.querySelector(`#${id}-vector-output`).setAttribute("d", `M${plotPoint(0, 0)} L${plotPoint(image.x, image.y)}`);
+      document.querySelector(`#${id}-vector-point`).setAttribute("cx", 210 + image.x * 43);
+      document.querySelector(`#${id}-vector-point`).setAttribute("cy", 170 - image.y * 43);
+      document.querySelector(`#${id}-vector-readout`).textContent =
+        `v = (${x.toFixed(1)}, ${y.toFixed(1)})  →  T(v) = (${image.x.toFixed(1)}, ${image.y.toFixed(1)})`;
     }
     for (const [id, offset] of [["a", 0], ["b", 1]]) {
-      drawExerciseGrid(document.querySelector(`#${id}-original`), (x, y) => ({ x, y }));
-      drawExerciseGrid(document.querySelector(`#${id}-mapped`), (x, y) => ({ x: x + 0.5 * y + offset, y }));
+      ["x", "y"].forEach(axis => {
+        document.querySelector(`#${id}-vector-${axis}`).addEventListener("input", () => updateExerciseVector(id, offset));
+      });
+      updateExerciseVector(id, offset);
     }
   </script>
   <script>
@@ -820,22 +823,8 @@
     updateGraphA();
     updateGraphB();
 
-    const original = document.querySelector("#original");
-    const mapped = document.querySelector("#mapped");
-    const scale = 48;
+    const scale = 27;
     function oldPoint(x, y) { return `${center.x + x * scale},${center.y - y * scale}`; }
-    function drawOldGrid(group, transform) {
-      group.replaceChildren();
-      for (let i = -3; i <= 3; i++) {
-        const lineX = document.createElementNS(svgNS, "path");
-        const lineY = document.createElementNS(svgNS, "path");
-        const a = transform(i, -3), b = transform(i, 3);
-        const c = transform(-3, i), d = transform(3, i);
-        lineX.setAttribute("d", `M${oldPoint(a.x, a.y)} L${oldPoint(b.x, b.y)}`);
-        lineY.setAttribute("d", `M${oldPoint(c.x, c.y)} L${oldPoint(d.x, d.y)}`);
-        group.append(lineX, lineY);
-      }
-    }
     function updateDemo() {
       const a = Number(document.querySelector("#sx").value);
       const k = Number(document.querySelector("#shear").value);
@@ -846,8 +835,9 @@
       document.querySelector("#vx-value").textContent = x.toFixed(1);
       document.querySelector("#vy-value").textContent = y.toFixed(1);
       const transform = (u, v) => ({ x: a * u + k * v, y: v });
-      drawOldGrid(original, (u, v) => ({ x: u, y: v }));
-      drawOldGrid(mapped, transform);
+      document.querySelector("#vector-input").setAttribute("d", `M${oldPoint(0, 0)} L${oldPoint(x, y)}`);
+      document.querySelector("#point-input").setAttribute("cx", center.x + x * scale);
+      document.querySelector("#point-input").setAttribute("cy", center.y - y * scale);
       const result = transform(x, y);
       document.querySelector("#vector").setAttribute("d", `M${oldPoint(0, 0)} L${oldPoint(result.x, result.y)}`);
       document.querySelector("#point").setAttribute("cx", center.x + result.x * scale);
