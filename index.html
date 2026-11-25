@@ -553,23 +553,45 @@
       }
     });
 
-    const plotPoint = (x, y) => `${210 + x * 43},${170 - y * 43}`;
+    const plotPoint = (x, y, scale) => `${210 + x * scale},${170 - y * scale}`;
+    function drawCountableGrid(svg, scale, maxX, maxY) {
+      const grid = document.createElementNS("http://www.w3.org/2000/svg", "g");
+      grid.setAttribute("class", "coordinate-grid");
+      grid.setAttribute("stroke", "#718096");
+      grid.setAttribute("stroke-opacity", ".28");
+      grid.setAttribute("stroke-width", "1");
+      for (let x = -maxX; x <= maxX; x++) {
+        const line = document.createElementNS("http://www.w3.org/2000/svg", "path");
+        line.setAttribute("d", `M${210 + x * scale},${170 - maxY * scale} V${170 + maxY * scale}`);
+        grid.append(line);
+      }
+      for (let y = -maxY; y <= maxY; y++) {
+        const line = document.createElementNS("http://www.w3.org/2000/svg", "path");
+        line.setAttribute("d", `M${210 - maxX * scale},${170 - y * scale} H${210 + maxX * scale}`);
+        grid.append(line);
+      }
+      const axis = Array.from(svg.children).find(element => element.localName === "path" && element.hasAttribute("stroke"));
+      svg.insertBefore(grid, axis);
+    }
     function updateExerciseVector(id, offset) {
       const x = Number(document.querySelector(`#${id}-vector-x`).value);
       const y = Number(document.querySelector(`#${id}-vector-y`).value);
       const image = { x: x + 0.5 * y + offset, y };
-      document.querySelector(`#${id}-vector-x-value`).textContent = x.toFixed(1);
-      document.querySelector(`#${id}-vector-y-value`).textContent = y.toFixed(1);
-      document.querySelector(`#${id}-vector-input`).setAttribute("d", `M${plotPoint(0, 0)} L${plotPoint(x, y)}`);
-      document.querySelector(`#${id}-vector-output`).setAttribute("d", `M${plotPoint(0, 0)} L${plotPoint(image.x, image.y)}`);
-      document.querySelector(`#${id}-vector-point`).setAttribute("cx", 210 + image.x * 43);
-      document.querySelector(`#${id}-vector-point`).setAttribute("cy", 170 - image.y * 43);
+      document.querySelector(`#${id}-vector-x-value`).textContent = x.toFixed(0);
+      document.querySelector(`#${id}-vector-y-value`).textContent = y.toFixed(0);
+      document.querySelector(`#${id}-vector-input`).setAttribute("d", `M${plotPoint(0, 0, 43)} L${plotPoint(x, y, 43)}`);
+      document.querySelector(`#${id}-vector-output`).setAttribute("d", `M${plotPoint(0, 0, 43)} L${plotPoint(image.x, image.y, 43)}`);
       document.querySelector(`#${id}-vector-readout`).textContent =
-        `v = (${x.toFixed(1)}, ${y.toFixed(1)})  →  T(v) = (${image.x.toFixed(1)}, ${image.y.toFixed(1)})`;
+        `v = (${x.toFixed(0)}, ${y.toFixed(0)})  →  T(v) = (${image.x.toFixed(1)}, ${image.y.toFixed(0)})`;
     }
     for (const [id, offset] of [["a", 0], ["b", 1]]) {
+      const svg = document.querySelector(`#${id}-vector-input`).ownerSVGElement;
+      drawCountableGrid(svg, 43, 4, 3);
+      document.querySelector(`#${id}-vector-point`).remove();
       ["x", "y"].forEach(axis => {
-        document.querySelector(`#${id}-vector-${axis}`).addEventListener("input", () => updateExerciseVector(id, offset));
+        const input = document.querySelector(`#${id}-vector-${axis}`);
+        input.step = "1";
+        input.addEventListener("input", () => updateExerciseVector(id, offset));
       });
       updateExerciseVector(id, offset);
     }
@@ -824,6 +846,10 @@
     updateGraphB();
 
     const scale = 27;
+    drawCountableGrid(document.querySelector("#plot"), scale, 7, 6);
+    document.querySelector("#point-input").setAttribute("r", "0");
+    document.querySelector("#point").setAttribute("r", "0");
+    ["vx", "vy"].forEach(id => { document.querySelector(`#${id}`).step = "1"; });
     function oldPoint(x, y) { return `${center.x + x * scale},${center.y - y * scale}`; }
     function updateDemo() {
       const a = Number(document.querySelector("#sx").value);
@@ -832,8 +858,8 @@
       const y = Number(document.querySelector("#vy").value);
       document.querySelector("#sx-value").textContent = a.toFixed(1);
       document.querySelector("#shear-value").textContent = k.toFixed(1);
-      document.querySelector("#vx-value").textContent = x.toFixed(1);
-      document.querySelector("#vy-value").textContent = y.toFixed(1);
+      document.querySelector("#vx-value").textContent = x.toFixed(0);
+      document.querySelector("#vy-value").textContent = y.toFixed(0);
       const transform = (u, v) => ({ x: a * u + k * v, y: v });
       document.querySelector("#vector-input").setAttribute("d", `M${oldPoint(0, 0)} L${oldPoint(x, y)}`);
       document.querySelector("#point-input").setAttribute("cx", center.x + x * scale);
