@@ -94,6 +94,11 @@
     .progress > span { display: block; width: 0; height: 100%; background: linear-gradient(90deg, var(--cyan), #a1a0ff); border-radius: inherit; transition: width .25s ease; }
     .exercise-box #exercise-rule { white-space: pre-line; }
     .proof-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; margin-top: 22px; align-items: start; }
+    .exercise-proof { display: grid; gap: 18px; margin-top: 22px; }
+    .exercise-block { padding-top: 28px; margin-top: 32px; border-top: 1px solid var(--line); }
+    .law { margin: 18px 0 0; padding: 18px 22px; border: 1px solid #66e4dc66; border-radius: 14px; background: #66e4dc10; }
+    .law h4 { margin: 0 0 6px; color: var(--cyan); }
+    .law .formula { font-size: clamp(1.3rem, 3vw, 2rem); }
     .graph-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 18px; margin-top: 22px; align-items: start; }
     .paper, .graph-paper { padding: clamp(16px, 3vw, 24px); border: 1px solid #b8c5d5; border-radius: 14px; color: #17243b; background: repeating-linear-gradient(to bottom, #fffefa 0, #fffefa 39px, #dce8f4 40px); box-shadow: 0 12px 35px #0003; }
     .paper h3, .graph-paper h3 { color: #70459a; margin: 0 0 10px; }
@@ -156,7 +161,7 @@
     @media (min-width: 1200px) and (min-height: 700px) and (min-aspect-ratio: 3/2) {
       .deck { width: min(1500px, calc(100% - 96px)); }
       .hero { min-height: 100svh; padding: clamp(48px, 7vh, 88px) 0; }
-      section:not(#guia) {
+      section:not(#guia):not(#guia-anterior) {
         min-height: 100svh;
         display: flex;
         flex-direction: column;
@@ -199,6 +204,11 @@
       </div>
     </header>
 
+    <section id="introduccion">
+      <div class="section-head"><div class="number">INTRO</div><h2>Una primera mirada a las transformaciones lineales</h2></div>
+      <p class="definition">Una transformación toma vectores de entrada y los convierte en otros vectores. Para saber si es lineal, comprobaremos dos reglas: que respete la suma de vectores y la multiplicación por escalares.</p>
+    </section>
+
     <section id="idea">
       <div class="section-head"><div class="number">01 / IDEA</div><h2>¿Qué significa que una función sea lineal?</h2></div>
       <p class="definition">Una transformación <strong>T: V → W</strong> es lineal si conserva las combinaciones de vectores: sumar y multiplicar por escalares antes o después de aplicar T produce lo mismo.</p>
@@ -210,6 +220,32 @@
     </section>
 
     <section id="guia">
+      <div class="section-head"><div class="number">02 / GUÍA</div><h2>Comprobemos las reglas, paso a paso</h2></div>
+      <p>En cada ejercicio, la regla de correspondencia define cómo se transforma cualquier vector. Primero probaremos superposición, después homogeneidad y finalmente observaremos la gráfica.</p>
+      <article class="wizard exercise-block" aria-labelledby="exercise-a-heading">
+        <h3 id="exercise-a-heading">Ejercicio A · Transformación lineal</h3>
+        <div class="exercise-box"><div class="tag">Regla de correspondencia</div><div class="formula">T(x, y) = (x + 0.5y, y)</div></div>
+        <div class="law"><h4>Superposición</h4><div class="formula">T(v₁ + v₂) = T(v₁) + T(v₂)</div></div>
+        <article class="paper"><h3>Comprobación de superposición</h3><div class="paper-lines" id="a-superposition-lines" aria-live="polite"></div><div class="paper-progress"><span id="a-superposition-progress"></span></div><div class="paper-controls"><button class="button secondary" type="button" id="a-superposition-back">Anterior</button><button class="button" type="button" id="a-superposition-next">Avanzar</button><button class="button quiet" type="button" id="a-superposition-all">Mostrar todo</button></div></article>
+        <div class="law"><h4>Homogeneidad</h4><div class="formula">T(a v₁) = aT(v₁)</div></div>
+        <article class="paper"><h3>Comprobación de homogeneidad</h3><div class="paper-lines" id="a-homogeneity-lines" aria-live="polite"></div><div class="paper-progress"><span id="a-homogeneity-progress"></span></div><div class="paper-controls"><button class="button secondary" type="button" id="a-homogeneity-back">Anterior</button><button class="button" type="button" id="a-homogeneity-next">Avanzar</button><button class="button quiet" type="button" id="a-homogeneity-all">Mostrar todo</button></div></article>
+        <div class="verdict" id="a-verdict" aria-live="polite"></div>
+        <article class="graph-paper"><h3>Gráfica A · cizalla lineal</h3><svg viewBox="0 0 420 340" role="img" aria-label="Plano cartesiano: T(x,y)=(x+0.5y,y) inclina la cuadrícula conservando el origen"><g id="a-original" fill="none" stroke="#66758c" stroke-opacity=".45"></g><g id="a-mapped" fill="none" stroke="#1885cb" stroke-width="2"></g><path d="M30 170H390M210 310V30" stroke="#9ba8b8"/></svg><p class="graph-caption">La cuadrícula se inclina, pero el origen permanece fijo.</p></article>
+      </article>
+      <article class="wizard exercise-block" aria-labelledby="exercise-b-heading">
+        <h3 id="exercise-b-heading">Ejercicio B · No es transformación lineal</h3>
+        <div class="exercise-box"><div class="tag">Regla de correspondencia</div><div class="formula">T(x, y) = (x + 0.5y + 1, y)</div></div>
+        <div class="law"><h4>Superposición</h4><div class="formula">T(v₁ + v₂) = T(v₁) + T(v₂)</div></div>
+        <article class="paper"><h3>Comprobación de superposición</h3><div class="paper-lines" id="b-superposition-lines" aria-live="polite"></div><div class="paper-progress"><span id="b-superposition-progress"></span></div><div class="paper-controls"><button class="button secondary" type="button" id="b-superposition-back">Anterior</button><button class="button" type="button" id="b-superposition-next">Avanzar</button><button class="button quiet" type="button" id="b-superposition-all">Mostrar todo</button></div></article>
+        <div class="law"><h4>Homogeneidad</h4><div class="formula">T(a v₁) = aT(v₁)</div></div>
+        <article class="paper"><h3>Comprobación de homogeneidad</h3><div class="paper-lines" id="b-homogeneity-lines" aria-live="polite"></div><div class="paper-progress"><span id="b-homogeneity-progress"></span></div><div class="paper-controls"><button class="button secondary" type="button" id="b-homogeneity-back">Anterior</button><button class="button" type="button" id="b-homogeneity-next">Avanzar</button><button class="button quiet" type="button" id="b-homogeneity-all">Mostrar todo</button></div></article>
+        <div class="verdict" id="b-verdict" aria-live="polite"></div>
+        <article class="graph-paper"><h3>Gráfica B · traslación que no conserva el origen</h3><svg viewBox="0 0 420 340" role="img" aria-label="Plano cartesiano: T(x,y)=(x+0.5y+1,y) desplaza la cuadrícula y no conserva el origen"><g id="b-original" fill="none" stroke="#66758c" stroke-opacity=".45"></g><g id="b-mapped" fill="none" stroke="#d04a78" stroke-width="2"></g><path d="M30 170H390M210 310V30" stroke="#9ba8b8"/></svg><p class="graph-caption">La cuadrícula se desplaza y T(0,0) = (1,0), no el origen.</p></article>
+      </article>
+      <button class="button secondary" type="button" id="reset-new-exercises">↺ Reiniciar los dos ejercicios</button>
+    </section>
+
+    <section id="guia-anterior" hidden>
       <div class="section-head"><div class="number">02 / GUÍA</div><h2>Resolvamos un ejercicio, paso a paso</h2></div>
       <p>Elige una función y avanza para revelar el procedimiento manual renglón por renglón. Cada toque muestra solo el siguiente cálculo o argumento; también puedes volver, reiniciar o mostrar la solución completa.</p>
       <div class="wizard" aria-label="Ejercicio interactivo de transformaciones lineales">
@@ -281,6 +317,7 @@
               <path d="M30 170H390M210 310V30" stroke="#9ba8b8" stroke-width="1"/>
               <path id="vector-b-combined" fill="none" stroke="#d04a78" stroke-width="4" marker-end="url(#arrow-b-combined)"/>
               <path id="vector-b-separate" fill="none" stroke="#1885cb" stroke-width="4" stroke-dasharray="7 4" marker-end="url(#arrow-b-separate)"/>
+              <path id="difference-b" fill="none" stroke="#333" stroke-width="2" stroke-dasharray="4 4"/>
               <circle id="point-b-combined" r="5" fill="#d04a78"/>
               <circle id="point-b-separate" r="5" fill="#1885cb"/>
             </svg>
@@ -306,8 +343,8 @@
       <div class="section-head"><div class="number">03 / MATRICES</div><h2>Cuando sí es lineal, una matriz la representa</h2></div>
       <p>Para transformaciones lineales entre espacios de coordenadas, existe una matriz A tal que T(x) = Ax. Una constante sumada al resultado no puede formar parte de esa multiplicación lineal.</p>
       <div class="grid">
-        <article class="card"><h3>Ejercicio A · lineal</h3><div class="formula">T_A(x, y) = (x, y)</div><p>Su matriz es <span class="formula">[ 1&nbsp; 0 ; 0&nbsp; 1 ]</span>.</p></article>
-        <article class="card"><h3>Ejercicio B · no lineal</h3><div class="formula">T_B(x, y) = (x + βy², y)</div><p>El término cuadrático produce líneas curvas y falla las propiedades de linealidad.</p></article>
+        <article class="card"><h3>Ejercicio A · lineal</h3><div class="formula">T(x, y) = (x + 0.5y, y)</div><p>Su matriz es <span class="formula">[ 1&nbsp; 0.5 ; 0&nbsp; 1 ]</span>.</p></article>
+        <article class="card"><h3>Ejercicio B · no lineal</h3><div class="formula">T(x, y) = (x + 0.5y + 1, y)</div><p>El término constante desplaza el origen y rompe las propiedades de linealidad.</p></article>
       </div>
     </section>
 
@@ -364,6 +401,120 @@
     <a href="#inicio" aria-label="Ir al inicio" title="Inicio">↑</a>
     <a href="#guia" aria-label="Ir al ejercicio" title="Ejercicio">✎</a>
   </nav>
+  <script>
+    const proofSteps = {
+      a: {
+        superposition: [
+          "Sean v₁ = (x₁, y₁), v₂ = (x₂, y₂) ∈ R².",
+          "T(v₁ + v₂) = T(x₁ + x₂, y₁ + y₂)",
+          "= (x₁ + x₂ + 0.5(y₁ + y₂), y₁ + y₂)",
+          "= (x₁ + 0.5y₁, y₁) + (x₂ + 0.5y₂, y₂)",
+          "= T(v₁) + T(v₂)  ✓"
+        ],
+        homogeneity: [
+          "Sea a ∈ R y v₁ = (x₁, y₁) ∈ R².",
+          "T(av₁) = T(ax₁, ay₁)",
+          "= (ax₁ + 0.5ay₁, ay₁)",
+          "= a(x₁ + 0.5y₁, y₁)",
+          "= aT(v₁)  ✓"
+        ]
+      },
+      b: {
+        superposition: [
+          "Sean v₁ = (x₁, y₁), v₂ = (x₂, y₂) ∈ R².",
+          "T(v₁ + v₂) = (x₁ + x₂ + 0.5(y₁ + y₂) + 1, y₁ + y₂)",
+          "T(v₁) + T(v₂) = (x₁ + x₂ + 0.5(y₁ + y₂) + 2, y₁ + y₂)",
+          "T(v₁ + v₂) ≠ T(v₁) + T(v₂)  ✗"
+        ],
+        homogeneity: [
+          "Sea a ∈ R y v₁ = (x₁, y₁) ∈ R².",
+          "T(av₁) = (ax₁ + 0.5ay₁ + 1, ay₁)",
+          "aT(v₁) = (ax₁ + 0.5ay₁ + a, ay₁)",
+          "Por ejemplo, a = 2: las primeras coordenadas difieren en 1.",
+          "T(av₁) ≠ aT(v₁)  ✗"
+        ]
+      }
+    };
+    const proofState = {};
+    for (const exercise of ["a", "b"]) {
+      proofState[exercise] = {};
+      for (const kind of ["superposition", "homogeneity"]) {
+        const lines = document.querySelector(`#${exercise}-${kind}-lines`);
+        let shown = 0;
+        const progress = document.querySelector(`#${exercise}-${kind}-progress`);
+        const back = document.querySelector(`#${exercise}-${kind}-back`);
+        const next = document.querySelector(`#${exercise}-${kind}-next`);
+        const all = document.querySelector(`#${exercise}-${kind}-all`);
+        const verdict = document.querySelector(`#${exercise}-verdict`);
+        const render = () => {
+          progress.style.width = `${shown / proofSteps[exercise][kind].length * 100}%`;
+          back.disabled = shown === 0;
+          next.disabled = shown === proofSteps[exercise][kind].length;
+          next.textContent = next.disabled ? "Completo ✓" : "Avanzar ↓";
+          all.disabled = next.disabled;
+          const complete = ["superposition", "homogeneity"].every(part =>
+            proofState[exercise][part] === proofSteps[exercise][part].length);
+          if (complete) {
+            verdict.className = `verdict visible ${exercise === "a" ? "yes" : "no"}`;
+            verdict.textContent = exercise === "a"
+              ? "Cumple ambas propiedades: es una transformación lineal."
+              : "Falla ambas propiedades: no es una transformación lineal.";
+          } else {
+            verdict.className = "verdict";
+            verdict.textContent = "";
+          }
+        };
+        const append = () => {
+          if (shown >= proofSteps[exercise][kind].length) return;
+          const row = document.createElement("div");
+          row.className = "paper-line";
+          row.textContent = proofSteps[exercise][kind][shown];
+          if (row.textContent.includes("✓")) row.classList.add("result-yes");
+          if (row.textContent.includes("✗")) row.classList.add("result-no");
+          lines.append(row);
+          shown++;
+          proofState[exercise][kind] = shown;
+          render();
+        };
+        next.addEventListener("click", append);
+        back.addEventListener("click", () => {
+          if (!shown) return;
+          shown--;
+          proofState[exercise][kind] = shown;
+          lines.lastElementChild.remove();
+          render();
+        });
+        all.addEventListener("click", () => {
+          while (shown < proofSteps[exercise][kind].length) append();
+        });
+        proofState[exercise][kind] = 0;
+        render();
+      }
+    }
+    document.querySelector("#reset-new-exercises").addEventListener("click", () => {
+      for (const exercise of ["a", "b"]) for (const kind of ["superposition", "homogeneity"]) {
+        while (proofState[exercise][kind] > 0) document.querySelector(`#${exercise}-${kind}-back`).click();
+      }
+    });
+
+    const plotPoint = (x, y) => `${210 + x * 43},${170 - y * 43}`;
+    function drawExerciseGrid(group, transform) {
+      group.replaceChildren();
+      for (let i = -3; i <= 3; i++) {
+        for (const vertical of [true, false]) {
+          const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+          const start = vertical ? transform(i, -3) : transform(-3, i);
+          const end = vertical ? transform(i, 3) : transform(3, i);
+          path.setAttribute("d", `M${plotPoint(start.x, start.y)} L${plotPoint(end.x, end.y)}`);
+          group.append(path);
+        }
+      }
+    }
+    for (const [id, offset] of [["a", 0], ["b", 1]]) {
+      drawExerciseGrid(document.querySelector(`#${id}-original`), (x, y) => ({ x, y }));
+      drawExerciseGrid(document.querySelector(`#${id}-mapped`), (x, y) => ({ x: x + 0.5 * y + offset, y }));
+    }
+  </script>
   <script>
     const svgNS = "http://www.w3.org/2000/svg";
     const center = { x: 210, y: 170 };
