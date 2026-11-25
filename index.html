@@ -33,13 +33,14 @@
     a { color: inherit; }
     .deck { width: min(1120px, 100% - 40px); margin: auto; }
     .hero {
-      min-height: min(820px, 90svh);
+      min-height: 100svh;
       display: grid;
       align-content: center;
-      padding: 82px 0;
+      padding: clamp(48px, 8vh, 100px) 0;
       position: relative;
+      overflow: hidden;
     }
-    .hero-mark { position: absolute; right: 4%; top: 24%; width: min(25vw, 270px); opacity: .8; pointer-events: none; }
+    .hero-mark { position: absolute; right: 2%; top: 12%; width: min(36vw, 480px); opacity: .28; pointer-events: none; }
     .eyebrow, .tag {
       color: var(--cyan);
       font-size: .78rem;
@@ -47,13 +48,15 @@
       letter-spacing: .16em;
       text-transform: uppercase;
     }
-    h1 { max-width: 820px; margin: 18px 0; font-size: clamp(3rem, 8vw, 6.7rem); line-height: .99; letter-spacing: -.065em; }
+    h1 { max-width: 1100px; margin: 24px 0; font-size: clamp(4rem, 8vw, 8rem); line-height: .9; letter-spacing: -.075em; }
     h1 span { color: var(--cyan); }
     h2 { margin: 0; font-size: clamp(2rem, 5vw, 3.7rem); letter-spacing: -.045em; line-height: 1.08; }
     h3 { margin: 0 0 10px; font-size: 1.15rem; }
     p { margin: 10px 0; color: var(--muted); }
-    .lead { max-width: 660px; font-size: clamp(1.05rem, 2vw, 1.3rem); }
+    .lead { max-width: 780px; font-size: clamp(1.15rem, 2vw, 1.5rem); }
     .hero-bottom { display: flex; flex-wrap: wrap; align-items: center; gap: 16px; margin-top: 34px; }
+    .hero-points { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 26px; }
+    .hero-points span { padding: 8px 14px; border: 1px solid var(--line); border-radius: 999px; color: var(--muted); background: #ffffff08; font-size: .92rem; }
     .button {
       min-height: 50px;
       display: inline-flex; gap: 10px; align-items: center; justify-content: center;
@@ -66,6 +69,7 @@
     .button.quiet { color: var(--cyan); background: transparent; }
     .hint { color: var(--muted); font-size: .92rem; }
     section { padding: 78px 0; border-top: 1px solid var(--line); scroll-margin-top: 20px; }
+    section[hidden] { display: none !important; }
     .section-head { display: grid; grid-template-columns: 90px 1fr; gap: 18px; margin-bottom: 30px; }
     .number { color: var(--cyan); font-size: .9rem; font-weight: 800; padding-top: 10px; }
     .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
@@ -78,6 +82,14 @@
     .definition strong { color: var(--cyan); }
     .callout { margin-top: 18px; padding: 20px 24px; border: 1px solid #ffd47755; border-radius: 14px; background: #ffd4770c; }
     .callout b { color: var(--yellow); }
+    .intro-summary { max-width: 1060px; margin: 0 0 26px; padding: clamp(20px, 3vw, 34px); border: 1px solid #66e4dc55; border-radius: 22px; color: var(--ink); background: linear-gradient(120deg, #66e4dc12, #ffffff08); font-size: clamp(1.15rem, 2vw, 1.55rem); }
+    .application-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+    .application-card { min-height: 150px; padding: 22px; border: 1px solid var(--line); border-radius: 18px; background: #ffffff08; }
+    .application-card .tag { display: block; margin-bottom: 10px; }
+    .application-card h3 { color: var(--ink); font-size: 1.2rem; }
+    .application-card p { margin-bottom: 0; }
+    .section-next { display: flex; justify-content: flex-end; margin-top: auto; padding-top: 26px; }
+    .section-next .button { min-width: 210px; }
     .wizard { padding: clamp(18px, 4vw, 34px); border: 1px solid var(--line); border-radius: 24px; background: linear-gradient(145deg, #1a2639, #141b2a); box-shadow: 0 20px 70px #0003; }
     .wizard-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 14px; flex-wrap: wrap; }
     .exercise-switch { display: flex; flex-wrap: wrap; gap: 10px; margin: 20px 0; }
@@ -147,19 +159,25 @@
     .properties { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 18px; }
     .property { padding: 18px; border-top: 2px solid var(--pink); background: #ffffff08; border-radius: 0 0 12px 12px; }
     .property b { display: block; color: var(--ink); margin-bottom: 4px; }
-    .takeaway { padding: clamp(24px, 5vw, 52px); border-radius: 22px; background: linear-gradient(120deg, #66e4dc18, #ff83b512); }
-    .takeaway h2 { max-width: 800px; }
+    .takeaway { padding: clamp(24px, 5vw, 64px); border: 1px solid #66e4dc33; border-radius: 28px; background: linear-gradient(120deg, #66e4dc18, #ff83b512); }
+    .takeaway h2 { max-width: 1000px; }
+    .closing-grid { display: grid; grid-template-columns: 1.4fr .8fr; gap: 18px; align-items: stretch; margin-top: 26px; }
+    .closing-card { padding: clamp(20px, 3vw, 34px); border: 1px solid var(--line); border-radius: 20px; background: #10152288; }
+    .closing-card h3 { color: var(--cyan); font-size: 1.25rem; }
+    .closing-card.thanks { display: grid; align-content: center; justify-items: center; min-height: 190px; text-align: center; }
+    .closing-card.thanks strong { color: var(--pink); font-size: clamp(2.2rem, 5vw, 4.5rem); line-height: 1; letter-spacing: -.05em; }
     footer { display: flex; justify-content: space-between; gap: 18px; padding: 24px 0 40px; color: var(--muted); font-size: .9rem; }
     .floating-nav { position: fixed; right: max(16px, env(safe-area-inset-right)); bottom: max(16px, env(safe-area-inset-bottom)); z-index: 4; display: flex; gap: 9px; }
     .floating-nav a { width: 50px; height: 50px; display: grid; place-items: center; border: 1px solid var(--line); border-radius: 50%; text-decoration: none; background: #171f30ed; font-size: 1.2rem; }
     :focus-visible { outline: 3px solid var(--yellow); outline-offset: 3px; }
     @media (max-width: 700px) {
       .deck { width: min(100% - 28px, 600px); }
-      .hero { min-height: 82svh; }
+      .hero { min-height: 88svh; }
+      h1 { font-size: clamp(3rem, 12vw, 4.5rem); }
       .hero-mark { opacity: .22; right: 0; top: 14%; width: 48vw; }
       section { padding: 56px 0; }
       .section-head { grid-template-columns: 54px 1fr; gap: 12px; }
-      .grid, .matrix-demo, .proof-grid { grid-template-columns: 1fr; }
+      .grid, .matrix-demo, .proof-grid, .application-grid, .closing-grid { grid-template-columns: 1fr; }
       .properties { grid-template-columns: 1fr; }
       .paper-controls { display: grid; grid-template-columns: 1fr 1fr; }
       .paper-controls .button { width: 100%; }
@@ -167,7 +185,7 @@
       footer { flex-direction: column; padding-bottom: 90px; }
       .floating-nav { display: none; }
     }
-    @media (min-width: 1200px) and (min-height: 700px) and (min-aspect-ratio: 3/2) {
+    @media (min-width: 960px) and (min-height: 540px) and (min-aspect-ratio: 3/2) {
       .deck { width: min(1500px, calc(100% - 96px)); }
       .hero { min-height: 100svh; padding: clamp(48px, 7vh, 88px) 0; }
       section:not(#guia):not(#guia-anterior) {
@@ -175,10 +193,20 @@
         display: flex;
         flex-direction: column;
         justify-content: center;
-        padding: clamp(32px, 5vh, 60px) 0;
+        padding: clamp(24px, 4vh, 48px) 0;
+        gap: clamp(12px, 2vh, 22px);
       }
       .section-head { margin-bottom: clamp(18px, 3vh, 30px); }
+      h2 { font-size: clamp(2rem, 4vw, 3.7rem); }
       .card { padding: clamp(18px, 2vw, 28px); }
+      #introduccion, #idea, #cierre { gap: clamp(12px, 1.8vh, 20px); }
+      .intro-summary { margin-bottom: 0; }
+      .application-card { min-height: 0; }
+      .intro-summary { padding: clamp(16px, 2vw, 26px); font-size: clamp(1rem, 1.5vw, 1.35rem); line-height: 1.5; }
+      .application-card { padding: clamp(16px, 1.8vw, 24px); }
+      .callout { padding: clamp(14px, 1.8vw, 20px); }
+      .section-next { padding-top: clamp(12px, 1.8vh, 20px); }
+      .closing-section .takeaway { padding: clamp(20px, 3vw, 42px); }
     }
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; }
@@ -205,17 +233,24 @@
           <circle cx="48" cy="190" r="7" fill="#ff83b5"/><circle cx="190" cy="48" r="7" fill="#ff83b5"/>
         </g>
       </svg>
-      <div class="eyebrow">Álgebra lineal · presentación interactiva</div>
+      <div class="eyebrow">Álgebra lineal · una presentación visual</div>
       <h1>Transformaciones<br><span>lineales</span></h1>
-      <p class="lead">Aprende a comprobar, con un procedimiento claro, si una función transforma vectores linealmente.</p>
+      <p class="lead">Una idea que conecta vectores, movimiento y cambio. Descubre cómo reconocer una transformación lineal y comprobar sus reglas paso a paso.</p>
+      <div class="hero-points" aria-label="Temas de la presentación"><span>Superposición</span><span>Homogeneidad</span><span>Ejemplos gráficos</span></div>
       <div class="hero-bottom">
-        <a class="button" href="#guia">Resolver un ejercicio <span aria-hidden="true">↓</span></a>
+        <a class="button" href="#introduccion">Comenzar presentación <span aria-hidden="true">↓</span></a>
       </div>
     </header>
 
     <section id="introduccion">
       <div class="section-head"><div class="number">INTRO</div><h2>Una primera mirada a las transformaciones lineales</h2></div>
-      <p class="definition">Las transformaciones lineales cambian vectores de forma ordenada y conservan las sumas y las multiplicaciones por un número. Se usan en gráficos por computadora para girar o cambiar el tamaño de figuras, en física e ingeniería para describir fuerzas y movimientos, y en análisis de datos para reorganizar información.</p>
+      <p class="intro-summary">Las transformaciones lineales describen cambios que siguen reglas claras: sumar vectores antes de transformar da el mismo resultado que transformar cada uno y sumar sus imágenes. Esta idea permite representar movimientos, cambios de escala y relaciones entre cantidades con herramientas matemáticas sencillas.</p>
+      <div class="application-grid">
+        <article class="application-card"><span class="tag">01 · Imágenes</span><h3>Gráficos por computadora</h3><p>Se usan para girar, estirar o cambiar el tamaño de figuras y objetos en una pantalla.</p></article>
+        <article class="application-card"><span class="tag">02 · Movimiento</span><h3>Física e ingeniería</h3><p>Ayudan a describir cómo se relacionan fuerzas, velocidades y movimientos en un sistema.</p></article>
+        <article class="application-card"><span class="tag">03 · Información</span><h3>Datos y tecnología</h3><p>Permiten organizar y transformar datos para analizarlos o prepararlos para otros cálculos.</p></article>
+      </div>
+      <div class="section-next"><a class="button secondary" href="#idea">Siguiente: la idea clave <span aria-hidden="true">↓</span></a></div>
     </section>
 
     <section id="idea">
@@ -226,6 +261,7 @@
         <article class="card"><h3 class="pink">Homogeneidad</h3><div class="formula">T(a v₁) = aT(v₁)</div><p>Multiplicar el vector antes de transformarlo da lo mismo que multiplicar el resultado.</p></article>
       </div>
       <div class="callout"><b>Un atajo:</b> prueba con el vector (0, 0). Si T(0, 0) no da (0, 0), la transformación no es lineal. Si sí da (0, 0), todavía hay que revisar superposición y homogeneidad.</div>
+      <div class="section-next"><a class="button secondary" href="#guia">Siguiente: los ejercicios <span aria-hidden="true">↓</span></a></div>
     </section>
 
     <section id="guia">
@@ -252,6 +288,7 @@
         <article class="graph-paper"><h3>Gráfica B · traslación que no conserva el origen</h3><svg viewBox="0 0 420 340" role="img" aria-label="Vector v y su imagen T(v) para la transformación T(x,y)=(x+0.5y+1,y)"><defs><marker id="arrow-b-input" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="#66758c"/></marker><marker id="arrow-b-output" markerWidth="8" markerHeight="8" refX="6" markerY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="#d04a78"/></marker></defs><path d="M30 170H390M210 310V30" stroke="#9ba8b8"/><path id="b-vector-input" fill="none" stroke="#66758c" stroke-width="3" stroke-dasharray="6 4" marker-end="url(#arrow-b-input)"/><path id="b-vector-output" fill="none" stroke="#d04a78" stroke-width="4" marker-end="url(#arrow-b-output)"/><circle id="b-vector-point" r="5" fill="#d04a78"/></svg><p class="graph-caption">Ajusta v = (x, y) y observa cómo la traslación modifica T(v).</p><div class="graph-controls controls"><div><label for="b-vector-x">Componente x: <span id="b-vector-x-value">1.0</span></label><input id="b-vector-x" type="range" min="-2" max="2" value="1" step="0.1"></div><div><label for="b-vector-y">Componente y: <span id="b-vector-y-value">1.0</span></label><input id="b-vector-y" type="range" min="-2" max="2" value="1" step="0.1"></div></div><div class="graph-readout" id="b-vector-readout"></div><div class="graph-legend"><span style="color:#66758c">v</span><span style="color:#d04a78">T(v)</span></div></article>
       </article>
       <button class="button secondary" type="button" id="reset-new-exercises">↺ Reiniciar los dos ejercicios</button>
+      <div class="section-next"><a class="button" href="#cierre">Ir a la conclusión <span aria-hidden="true">↓</span></a></div>
     </section>
 
     <section id="guia-anterior" hidden>
@@ -348,7 +385,7 @@
       </div>
     </section>
 
-    <section id="matrices">
+    <section id="matrices" hidden>
       <div class="section-head"><div class="number">03 / MATRICES</div><h2>Cuando sí es lineal, una matriz la representa</h2></div>
       <p>Para transformaciones lineales entre espacios de coordenadas, existe una matriz A tal que T(x) = Ax. Una constante sumada al resultado no puede formar parte de esa multiplicación lineal.</p>
       <div class="grid">
@@ -357,7 +394,7 @@
       </div>
     </section>
 
-    <section id="demo">
+    <section id="demo" hidden>
       <div class="section-head"><div class="number">04 / EXPLORA</div><h2>Una cizalla lineal transforma vectores</h2></div>
       <p>La regla <span class="formula">T(x, y) = (ax + ky, y)</span> transforma cada vector de entrada. Ajusta la matriz y el vector para comparar v con T(v); como no hay traslación, el origen se conserva.</p>
       <div class="matrix-demo">
@@ -387,7 +424,7 @@
       </div>
     </section>
 
-    <section id="repaso">
+    <section id="repaso" hidden>
       <div class="section-head"><div class="number">05 / REPASO</div><h2>Una lista corta para tus ejercicios</h2></div>
       <div class="properties">
         <div class="property"><b>1. Identifica dominio y regla</b><p>Escribe qué vectores entran y qué expresión define T.</p></div>
@@ -396,13 +433,16 @@
       </div>
     </section>
 
-    <section id="cierre">
+    <section id="cierre" class="closing-section">
       <div class="takeaway">
-        <div class="eyebrow">Idea final</div>
-        <h2>Comprueba las propiedades, no te guíes solo por la apariencia.</h2>
-        <p>Una regla es lineal si conserva las sumas y los múltiplos de vectores. Si una sola prueba falla, no es lineal.</p>
-        <div class="formula">T(u + v) = T(u) + T(v) &nbsp; y &nbsp; T(cu) = cT(u)</div>
+        <div class="eyebrow">Conclusión</div>
+        <h2>Una transformación lineal conserva las reglas, aunque cambien los vectores.</h2>
+        <div class="closing-grid">
+          <article class="closing-card"><h3>¿Qué comprobamos?</h3><p>La superposición y la homogeneidad. Si ambas se cumplen, la transformación es lineal; si una falla, no lo es.</p><div class="formula">T(u + v) = T(u) + T(v)<br>T(a v) = aT(v)</div></article>
+          <article class="closing-card thanks"><strong>¡Gracias!</strong><p>Por su atención</p></article>
+        </div>
       </div>
+      <div class="section-next"><a class="button secondary" href="#inicio">Volver al inicio <span aria-hidden="true">↑</span></a></div>
     </section>
     <footer><span>Transformaciones lineales · Álgebra lineal</span><span>Presentación interactiva · Español</span></footer>
   </main>
