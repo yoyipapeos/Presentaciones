@@ -215,17 +215,17 @@
 
     <section id="introduccion">
       <div class="section-head"><div class="number">INTRO</div><h2>Una primera mirada a las transformaciones lineales</h2></div>
-      <p class="definition">Una transformación toma vectores de entrada y los convierte en otros vectores. Para saber si es lineal, comprobaremos dos reglas: que respete la suma de vectores y la multiplicación por escalares.</p>
+      <p class="definition">Una transformación recibe vectores y los convierte en otros. Para saber si es lineal, comprobaremos dos reglas: qué ocurre al sumar vectores y al multiplicarlos por un número.</p>
     </section>
 
     <section id="idea">
       <div class="section-head"><div class="number">01 / IDEA</div><h2>¿Qué significa que una función sea lineal?</h2></div>
-      <p class="definition">Una transformación <strong>T: V → W</strong> es lineal si conserva las combinaciones de vectores: sumar y multiplicar por escalares antes o después de aplicar T produce lo mismo.</p>
+      <p class="definition">Una transformación <strong>T</strong> toma un vector y lo convierte en otro. Es lineal cuando cumple estas dos reglas:</p>
       <div class="grid">
-        <article class="card"><h3 class="accent">Aditividad</h3><div class="formula">T(u + v) = T(u) + T(v)</div><p>La imagen de una suma es la suma de las imágenes.</p></article>
-        <article class="card"><h3 class="pink">Homogeneidad</h3><div class="formula">T(cu) = cT(u)</div><p>La imagen de un múltiplo es el mismo múltiplo de la imagen.</p></article>
+        <article class="card"><h3 class="accent">Superposición</h3><div class="formula">T(u + v) = T(u) + T(v)</div><p>Transformar una suma da lo mismo que transformar cada vector y sumar los resultados.</p></article>
+        <article class="card"><h3 class="pink">Homogeneidad</h3><div class="formula">T(cu) = cT(u)</div><p>Multiplicar el vector antes de transformarlo da lo mismo que multiplicar el resultado.</p></article>
       </div>
-      <div class="callout"><b>Atajo importante:</b> toda transformación lineal debe cumplir T(0) = 0. Si T(0) ≠ 0, ya sabemos que no es lineal. Si T(0) = 0, todavía hay que revisar aditividad y homogeneidad.</div>
+      <div class="callout"><b>Un atajo:</b> prueba con el vector (0, 0). Si T(0, 0) no da (0, 0), la transformación no es lineal. Si sí da (0, 0), todavía hay que revisar superposición y homogeneidad.</div>
     </section>
 
     <section id="guia">
@@ -392,7 +392,7 @@
       <div class="properties">
         <div class="property"><b>1. Identifica dominio y regla</b><p>Escribe qué vectores entran y qué expresión define T.</p></div>
         <div class="property"><b>2. Prueba el vector cero</b><p>Si T(0) ≠ 0, concluye inmediatamente que no es lineal.</p></div>
-        <div class="property"><b>3. Verifica las dos propiedades</b><p>Si T(0) = 0, demuestra aditividad y homogeneidad para vectores generales.</p></div>
+        <div class="property"><b>3. Verifica las dos propiedades</b><p>Si T(0) = 0, comprueba la superposición y la homogeneidad con vectores cualquiera.</p></div>
       </div>
     </section>
 
@@ -400,7 +400,7 @@
       <div class="takeaway">
         <div class="eyebrow">Idea final</div>
         <h2>Comprueba las propiedades, no te guíes solo por la apariencia.</h2>
-        <p>Una regla es lineal exactamente cuando conserva sumas y múltiplos escalares. Para descartarla, un solo caso que falle es suficiente.</p>
+        <p>Una regla es lineal si conserva las sumas y los múltiplos de vectores. Si una sola prueba falla, no es lineal.</p>
         <div class="formula">T(u + v) = T(u) + T(v) &nbsp; y &nbsp; T(cu) = cT(u)</div>
       </div>
     </section>
